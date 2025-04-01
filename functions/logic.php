@@ -53,27 +53,93 @@ class PensiunManager {
         }
     }
 
-    // Get all pensiun data with pagination and search
-    public function getAllPensiun($search = '') {
+    // Get all pensiun data with pagination, search and ordering
+    public function getAllPensiun($start = 0, $length = 10, $search = '', $order = []) {
         try {
+            // Check if pensiun table has any data
+            $checkQuery = "SELECT COUNT(*) as count FROM pensiun";
+            $stmt = $this->conn->prepare($checkQuery);
+            $stmt->execute();
+            $count = $stmt->fetch()['count'];
+            
+            if ($count === 0) {
+                return [
+                    'data' => [],
+                    'total' => 0,
+                    'filtered' => 0
+                ];
+            }
+
+            // Base query
+            $baseQuery = "FROM pensiun p 
+                         JOIN pegawai pg ON p.pegawai_id = pg.id";
+
+            // Where clause
+            $whereClause = '';
+            if ($search) {
+                $whereClause = " WHERE pg.nama LIKE :search 
+                               OR pg.nip LIKE :search 
+                               OR p.jenis_pensiun LIKE :search 
+                               OR CONCAT(pg.induk_unit, ' - ', pg.unit_kerja) LIKE :search";
+            }
+
+            // Order clause
+            $orderClause = " ORDER BY p.created_at DESC";
+            if (!empty($order)) {
+                $validColumns = ['nama', 'nip', 'tmt_pensiun', 'jenis_pensiun', 'tempat_tugas', 'status'];
+                $orderBy = [];
+                foreach ($order as $ord) {
+                    if (isset($ord['column']) && in_array($ord['column'], $validColumns)) {
+                        $direction = (isset($ord['dir']) && strtoupper($ord['dir']) === 'DESC') ? 'DESC' : 'ASC';
+                        $orderBy[] = "p.{$ord['column']} {$direction}";
+                    }
+                }
+                if (!empty($orderBy)) {
+                    $orderClause = " ORDER BY " . implode(', ', $orderBy);
+                }
+            }
+
+            // Get total records
+            $totalQuery = "SELECT COUNT(*) as total " . $baseQuery;
+            $stmt = $this->conn->prepare($totalQuery);
+            $stmt->execute();
+            $total = $stmt->fetch()['total'];
+
+            // Get filtered records
+            $filteredQuery = "SELECT COUNT(*) as filtered " . $baseQuery . $whereClause;
+            $stmt = $this->conn->prepare($filteredQuery);
+            if ($search) {
+                $searchParam = "%{$search}%";
+                $stmt->bindParam(':search', $searchParam);
+            }
+            $stmt->execute();
+            $filtered = $stmt->fetch()['filtered'];
+
+            // Get paginated data
             $query = "SELECT p.*, pg.nip, pg.nama, pg.induk_unit, pg.unit_kerja, 
-                      CONCAT(pg.induk_unit, ' - ', pg.unit_kerja) as tempat_tugas 
-                      FROM pensiun p 
-                      JOIN pegawai pg ON p.pegawai_id = pg.id 
-                      WHERE pg.nama LIKE :search 
-                      OR pg.nip LIKE :search 
-                      OR p.jenis_pensiun LIKE :search 
-                      OR CONCAT(pg.induk_unit, ' - ', pg.unit_kerja) LIKE :search 
-                      ORDER BY p.created_at DESC";
+                      CONCAT(pg.induk_unit, ' - ', pg.unit_kerja) as tempat_tugas " . 
+                      $baseQuery . $whereClause . $orderClause . 
+                      " LIMIT :start, :length";
 
             $stmt = $this->conn->prepare($query);
-            $searchParam = "%{$search}%";
-            $stmt->bindParam(':search', $searchParam);
+            $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+            $stmt->bindParam(':length', $length, PDO::PARAM_INT);
+            if ($search) {
+                $stmt->bindParam(':search', $searchParam);
+            }
             $stmt->execute();
 
-            return $stmt->fetchAll();
+            return [
+                'data' => $stmt->fetchAll(),
+                'total' => $total,
+                'filtered' => $filtered
+            ];
         } catch (PDOException $e) {
-            throw new Exception("Error getting pensiun data: " . $e->getMessage());
+            return [
+                'data' => [],
+                'total' => 0,
+                'filtered' => 0
+            ];
         }
     }
 

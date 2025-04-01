@@ -194,9 +194,25 @@ $(document).ready(function() {
 // Initialize DataTable
 function initializeDataTable() {
     dataTable = $('#pensiunTable').DataTable({
+        processing: true,
+        serverSide: true,
         ajax: {
             url: '<?= BASE_URL ?>/api/pensiun-list.php',
-            dataSrc: 'data'
+            type: 'POST',
+            data: function(d) {
+                return {
+                    draw: d.draw,
+                    start: d.start,
+                    length: d.length,
+                    search: d.search.value,
+                    order: d.order.map(function(order) {
+                        return {
+                            column: d.columns[order.column].data,
+                            dir: order.dir
+                        };
+                    })
+                };
+            }
         },
         columns: [
             { data: 'nama' },
