@@ -72,7 +72,7 @@ class PensiunManager {
 
             // Base query
             $baseQuery = "FROM pensiun p 
-                         JOIN pegawai pg ON p.pegawai_id = pg.id";
+                         JOIN pegawai pg ON p.nip = pg.nip";
 
             // Where clause
             $whereClause = '';
@@ -146,29 +146,153 @@ class PensiunManager {
     // Get pegawai by NIP for Select2
     public function searchPegawai($term) {
         try {
-            $query = "SELECT id, nip, nama, induk_unit, unit_kerja, tmt_pensiun 
-                      FROM pegawai 
-                      WHERE nip LIKE :term 
-                      OR nama LIKE :term 
-                      LIMIT 10";
+            $query = "SELECT 
+                nip,
+                nama,
+                induk_unit,
+                unit_kerja,
+                tmt_pensiun
+                FROM pegawai 
+                WHERE nip LIKE :term 
+                OR nama LIKE :term 
+                ORDER BY nama ASC 
+                LIMIT 10";
 
             $stmt = $this->conn->prepare($query);
             $searchTerm = "%{$term}%";
             $stmt->bindParam(':term', $searchTerm);
             $stmt->execute();
 
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Error searching pegawai: " . $e->getMessage());
+        }
+    }
+
+
+
+    // Get summary of pegawai by kabupaten/kota
+    public function getPegawaiByKabupaten() {
+        try {
+            $query = "SELECT induk_unit, COUNT(*) as total FROM pegawai GROUP BY induk_unit ORDER BY induk_unit ASC";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            throw new Exception("Error getting pegawai summary by kabupaten: " . $e->getMessage());
+        }
+    }
+
+    // Get all pegawai data with pagination, search and ordering
+    public function getAllPegawai($start = 0, $length = 10, $search = '', $order = []) {
+        try {
+            // Check if pegawai table has any data
+            $checkQuery = "SELECT COUNT(*) as count FROM pegawai";
+            $stmt = $this->conn->prepare($checkQuery);
+            $stmt->execute();
+            $count = $stmt->fetch()['count'];
+            
+            if ($count === 0) {
+                return [
+                    'data' => [],
+                    'total' => 0,
+                    'filtered' => 0
+                ];
+            }
+
+            // Base query
+            $baseQuery = "FROM pegawai";
+
+            // Where clause
+            $whereClause = '';
+            if ($search) {
+                $whereClause = " WHERE nip LIKE :search 
+                               OR nama LIKE :search 
+                               OR induk_unit LIKE :search 
+                               OR unit_kerja LIKE :search";
+            }
+
+            // Order clause
+            $orderClause = " ORDER BY nama ASC";
+            if (!empty($order)) {
+                $validColumns = ['nip', 'nama', 'induk_unit', 'unit_kerja', 'tmt_pensiun'];
+                $orderBy = [];
+                foreach ($order as $ord) {
+                    if (isset($ord['column']) && in_array($ord['column'], $validColumns)) {
+                        $direction = (isset($ord['dir']) && strtoupper($ord['dir']) === 'DESC') ? 'DESC' : 'ASC';
+                        $orderBy[] = "{$ord['column']} {$direction}";
+                    }
+                }
+                if (!empty($orderBy)) {
+                    $orderClause = " ORDER BY " . implode(', ', $orderBy);
+                }
+            }
+
+            // Get total records
+            $totalQuery = "SELECT COUNT(*) as total " . $baseQuery;
+            $stmt = $this->conn->prepare($totalQuery);
+            $stmt->execute();
+            $total = $stmt->fetch()['total'];
+
+            // Get filtered records
+            $filteredQuery = "SELECT COUNT(*) as filtered " . $baseQuery . $whereClause;
+            $stmt = $this->conn->prepare($filteredQuery);
+            if ($search) {
+                $searchParam = "%{$search}%";
+                $stmt->bindParam(':search', $searchParam);
+            }
+            $stmt->execute();
+            $filtered = $stmt->fetch()['filtered'];
+
+            // Get paginated data
+            $query = "SELECT * " . $baseQuery . $whereClause . $orderClause . 
+                     " LIMIT :start, :length";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+            $stmt->bindParam(':length', $length, PDO::PARAM_INT);
+            if ($search) {
+                $stmt->bindParam(':search', $searchParam);
+            }
+            $stmt->execute();
+
+            return [
+                'data' => $stmt->fetchAll(),
+                'total' => $total,
+                'filtered' => $filtered
+            ];
+        } catch (PDOException $e) {
+            return [
+                'data' => [],
+                'total' => 0,
+                'filtered' => 0
+            ];
         }
     }
 
     // Save or update pensiun data
     public function savePensiun($data) {
         try {
+            // Validasi data
+            if (!isset($data['jenis_pensiun']) || empty($data['jenis_pensiun'])) {
+                throw new Exception('Jenis pensiun harus diisi');
+            }
+            if (!isset($data['status']) || empty($data['status'])) {
+                throw new Exception('Status harus diisi');
+            }
+
             $this->conn->beginTransaction();
 
             if (isset($data['id'])) {
+                // Validasi ID
+                $checkQuery = "SELECT id FROM pensiun WHERE id = :id";
+                $checkStmt = $this->conn->prepare($checkQuery);
+                $checkStmt->bindParam(':id', $data['id']);
+                $checkStmt->execute();
+                if (!$checkStmt->fetch()) {
+                    throw new Exception('Data pensiun tidak ditemukan');
+                }
+
                 // Update
                 $query = "UPDATE pensiun SET 
                           jenis_pensiun = :jenis_pensiun,
@@ -180,14 +304,28 @@ class PensiunManager {
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindParam(':id', $data['id']);
             } else {
+                // Validasi NIP
+                if (!isset($data['nip']) || empty($data['nip'])) {
+                    throw new Exception('Data pegawai harus dipilih');
+                }
+
+                // Cek apakah pegawai sudah ada di tabel pensiun
+                $checkQuery = "SELECT id FROM pensiun WHERE nip = :nip";
+                $checkStmt = $this->conn->prepare($checkQuery);
+                $checkStmt->bindParam(':nip', $data['nip']);
+                $checkStmt->execute();
+                if ($checkStmt->fetch()) {
+                    throw new Exception('Data pensiun untuk pegawai ini sudah ada');
+                }
+
                 // Insert
                 $query = "INSERT INTO pensiun 
-                          (pegawai_id, jenis_pensiun, status, file_sk, created_at, updated_at)
+                          (nip, jenis_pensiun, status, file_sk, created_at, updated_at)
                           VALUES 
-                          (:pegawai_id, :jenis_pensiun, :status, :file_sk, NOW(), NOW())";
+                          (:nip, :jenis_pensiun, :status, :file_sk, NOW(), NOW())";
 
                 $stmt = $this->conn->prepare($query);
-                $stmt->bindParam(':pegawai_id', $data['pegawai_id']);
+                $stmt->bindParam(':nip', $data['nip'], PDO::PARAM_STR);
             }
 
             $stmt->bindParam(':jenis_pensiun', $data['jenis_pensiun']);
@@ -207,11 +345,11 @@ class PensiunManager {
     // Get jenis pensiun list
     public function getJenisPensiun() {
         try {
-            $query = "SELECT * FROM jenis_pensiun ORDER BY nama_jenis";
+            $query = "SELECT id, nama_jenis FROM jenis_pensiun ORDER BY nama_jenis ASC";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
 
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Error getting jenis pensiun: " . $e->getMessage());
         }

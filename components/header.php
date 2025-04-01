@@ -71,7 +71,8 @@
                     <span class="text-xl font-semibold"><?= APP_NAME ?></span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="<?= BASE_URL ?>" class="hover:text-secondary transition-colors">Beranda</a>
+                    <a href="<?= BASE_URL ?>" class="hover:text-secondary transition-colors <?= strpos($_SERVER['REQUEST_URI'], 'index.php') !== false || $_SERVER['REQUEST_URI'] == BASE_URL ? 'text-secondary' : '' ?>">Beranda</a>
+                    <a href="<?= BASE_URL ?>/pages/pegawai.php" class="hover:text-secondary transition-colors <?= strpos($_SERVER['REQUEST_URI'], 'pegawai.php') !== false ? 'text-secondary' : '' ?>">Data Pegawai</a>
                 </div>
             </div>
         </div>

@@ -9,6 +9,10 @@ $pensiunManager = new PensiunManager();
 $response = ['status' => false, 'message' => ''];
 
 try {
+    // For debugging
+    error_log('POST data: ' . print_r($_POST, true));
+    error_log('FILES data: ' . print_r($_FILES, true));
+
     // Handle delete request
     if (isset($_POST['delete']) && ($_POST['delete'] === 'true' || $_POST['delete'] === true)) {
         if (!isset($_POST['id']) || empty($_POST['id'])) {
@@ -23,8 +27,9 @@ try {
         echo json_encode($response);
         exit;
     }
+    
     // Validasi input
-    if (!isset($_POST['pegawai_id']) && !isset($_POST['id'])) {
+    if (!isset($_POST['nip']) && !isset($_POST['id'])) {
         throw new Exception('Data pegawai tidak valid');
     }
     
@@ -48,14 +53,14 @@ try {
         $data['id'] = $_POST['id'];
     } else {
         // Jika tidak ada ID, ini adalah insert baru
-        if (!isset($_POST['pegawai_id']) || empty($_POST['pegawai_id'])) {
+        if (!isset($_POST['nip']) || empty($_POST['nip'])) {
             throw new Exception('Data pegawai harus dipilih');
         }
-        $data['pegawai_id'] = $_POST['pegawai_id'];
+        $data['nip'] = $_POST['nip'];
     }
     
     // Handle file upload jika status Selesai
-    if ($_POST['status'] === STATUS_SELESAI) {
+    if ($_POST['status'] === 'Selesai') {
         // Jika update dan tidak ada file baru
         if (isset($_POST['id']) && (!isset($_FILES['file_sk']) || $_FILES['file_sk']['error'] === UPLOAD_ERR_NO_FILE)) {
             // Cek apakah sudah ada file sebelumnya
@@ -109,6 +114,7 @@ try {
     $response['message'] = 'Data pensiun berhasil disimpan';
     $response['id'] = $id;
 } catch (Exception $e) {
+    error_log('Error in pensiun-save: ' . $e->getMessage());
     $response['message'] = $e->getMessage();
 }
 

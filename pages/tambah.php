@@ -21,11 +21,13 @@ include __DIR__ . '/../components/header.php';
 <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow duration-300">
     <form id="pensiunForm" onsubmit="savePensiun(event)">
         <input type="hidden" id="pegawai_id" name="pegawai_id">
+        <!-- Added hidden field for NIP -->
+        <input type="hidden" id="nip" name="nip">
 
         <div class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700">NIP</label>
-                <select id="nip" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 select2-input"></select>
+                <select id="nip_select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 select2-input"></select>
             </div>
 
             <div>
@@ -99,7 +101,7 @@ include __DIR__ . '/../components/header.php';
 <script>
 // Initialize Select2
 $(document).ready(function() {
-    $('#nip').select2({
+    $('#nip_select').select2({
         placeholder: 'Masukkan NIP atau nama pegawai',
         minimumInputLength: 3,
         ajax: {
@@ -114,7 +116,7 @@ $(document).ready(function() {
             processResults: function(data) {
                 return {
                     results: data.map(item => ({
-                        id: item.id,
+                        id: item.nip, // Changed to use NIP as the ID
                         text: `${item.nip} - ${item.nama}`,
                         pegawai: item
                     }))
@@ -125,6 +127,7 @@ $(document).ready(function() {
     }).on('select2:select', function(e) {
         const pegawai = e.params.data.pegawai;
         $('#pegawai_id').val(pegawai.id);
+        $('#nip').val(pegawai.nip); // Set the hidden NIP field
         $('#nama').val(pegawai.nama);
         $('#induk_unit').val(pegawai.induk_unit);
         $('#unit_kerja').val(pegawai.unit_kerja);
@@ -146,12 +149,19 @@ $(document).ready(function() {
 function savePensiun(event) {
     event.preventDefault();
 
-    if (!$('#pegawai_id').val()) {
+    if (!$('#nip').val()) {
         showToast('error', 'Silakan pilih pegawai terlebih dahulu');
         return;
     }
 
     const formData = new FormData($('#pensiunForm')[0]);
+    
+    // Log the form data for debugging
+    console.log('Form data:', {
+        nip: $('#nip').val(),
+        jenis_pensiun: $('#jenis_pensiun').val(),
+        status: $('#status').val()
+    });
     
     $.ajax({
         url: '<?= BASE_URL ?>/api/pensiun-save.php',
@@ -169,7 +179,8 @@ function savePensiun(event) {
                 showToast('error', response.message);
             }
         },
-        error: function() {
+        error: function(xhr, status, error) {
+            console.error('Ajax error:', xhr.responseText);
             showToast('error', 'Terjadi kesalahan sistem');
         }
     });
