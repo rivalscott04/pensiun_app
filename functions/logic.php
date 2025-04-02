@@ -80,26 +80,27 @@ class PensiunManager
 
             // Base query
             $baseQuery = "FROM pensiun p 
-                         JOIN pegawai pg ON p.nip = pg.nip";
+                         LEFT JOIN jenis_pensiun jp ON p.jenis_pensiun_id = jp.id";
 
             // Where clause
             $whereClause = '';
             if ($search) {
-                $whereClause = " WHERE pg.nama LIKE :search 
-                               OR pg.nip LIKE :search 
-                               OR p.jenis_pensiun LIKE :search 
-                               OR CONCAT(pg.induk_unit, ' - ', pg.unit_kerja) LIKE :search";
+                $whereClause = " WHERE p.nama LIKE :search 
+                               OR p.nip LIKE :search 
+                               OR jp.nama_jenis LIKE :search 
+                               OR p.tempat_tugas LIKE :search";
             }
 
             // Order clause
             $orderClause = " ORDER BY p.created_at DESC";
             if (!empty($order)) {
-                $validColumns = ['nama', 'nip', 'tmt_pensiun', 'jenis_pensiun', 'tempat_tugas', 'status'];
+                $validColumns = ['nama', 'nip', 'tmt_pensiun', 'jenis_pensiun_nama', 'tempat_tugas', 'status'];
                 $orderBy = [];
                 foreach ($order as $ord) {
                     if (isset($ord['column']) && in_array($ord['column'], $validColumns)) {
                         $direction = (isset($ord['dir']) && strtoupper($ord['dir']) === 'DESC') ? 'DESC' : 'ASC';
-                        $orderBy[] = "p.{$ord['column']} {$direction}";
+                        $column = $ord['column'] === 'jenis_pensiun_nama' ? 'jp.nama_jenis' : "p.{$ord['column']}";
+                        $orderBy[] = "{$column} {$direction}";
                     }
                 }
                 if (!empty($orderBy)) {
@@ -124,8 +125,9 @@ class PensiunManager
             $filtered = $stmt->fetch()['filtered'];
 
             // Get paginated data
-            $query = "SELECT p.*, pg.nip, pg.nama, pg.induk_unit, pg.unit_kerja, 
-                      CONCAT(pg.induk_unit, ' - ', pg.unit_kerja) as tempat_tugas " . 
+            $query = "SELECT p.id, p.nip, p.nama, p.tmt_pensiun, p.tempat_tugas, 
+                      p.jenis_pensiun_id, p.status, p.file_sk, p.created_at,
+                      jp.nama_jenis as jenis_pensiun_nama " . 
                       $baseQuery . $whereClause . $orderClause . 
                       " LIMIT :start, :length";
 
@@ -329,11 +331,20 @@ class PensiunManager
     public function savePensiun($data) {
         try {
             // Validasi data
-            if (!isset($data['jenis_pensiun']) || empty($data['jenis_pensiun'])) {
+            if (!isset($data['jenis_pensiun_id']) || empty($data['jenis_pensiun_id'])) {
                 throw new Exception('Jenis pensiun harus diisi');
             }
             if (!isset($data['status']) || empty($data['status'])) {
                 throw new Exception('Status harus diisi');
+            }
+
+            // Validasi jenis_pensiun_id
+            $checkJenisQuery = "SELECT id FROM jenis_pensiun WHERE id = :jenis_pensiun_id";
+            $checkJenisStmt = $this->conn->prepare($checkJenisQuery);
+            $checkJenisStmt->bindParam(':jenis_pensiun_id', $data['jenis_pensiun_id']);
+            $checkJenisStmt->execute();
+            if (!$checkJenisStmt->fetch()) {
+                throw new Exception('Jenis pensiun tidak valid');
             }
 
             $this->conn->beginTransaction();
@@ -350,7 +361,7 @@ class PensiunManager
 
                 // Update
                 $query = "UPDATE pensiun SET 
-                          jenis_pensiun = :jenis_pensiun,
+                          jenis_pensiun_id = :jenis_pensiun_id,
                           status = :status,
                           file_sk = :file_sk,
                           updated_at = NOW()
@@ -373,17 +384,33 @@ class PensiunManager
                     throw new Exception('Data pensiun untuk pegawai ini sudah ada');
                 }
 
-                // Insert
+                // Get pegawai data
+                $pegawaiQuery = "SELECT *, CONCAT(induk_unit, ' - ', unit_kerja) as tempat_tugas 
+                                 FROM pegawai 
+                                 WHERE nip = :nip";
+                $pegawaiStmt = $this->conn->prepare($pegawaiQuery);
+                $pegawaiStmt->bindParam(':nip', $data['nip']);
+                $pegawaiStmt->execute();
+                $pegawai = $pegawaiStmt->fetch();
+
+                if (!$pegawai) {
+                    throw new Exception('Data pegawai tidak ditemukan');
+                }
+
+                // Insert with additional fields
                 $query = "INSERT INTO pensiun 
-                          (nip, jenis_pensiun, status, file_sk, created_at, updated_at)
+                          (nip, nama, tmt_pensiun, tempat_tugas, jenis_pensiun_id, status, file_sk, created_at, updated_at)
                           VALUES 
-                          (:nip, :jenis_pensiun, :status, :file_sk, NOW(), NOW())";
+                          (:nip, :nama, :tmt_pensiun, :tempat_tugas, :jenis_pensiun_id, :status, :file_sk, NOW(), NOW())";
 
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindParam(':nip', $data['nip'], PDO::PARAM_STR);
+                $stmt->bindParam(':nama', $pegawai['nama'], PDO::PARAM_STR);
+                $stmt->bindParam(':tmt_pensiun', $pegawai['tmt_pensiun'], PDO::PARAM_STR);
+                $stmt->bindParam(':tempat_tugas', $pegawai['tempat_tugas'], PDO::PARAM_STR);
             }
 
-            $stmt->bindParam(':jenis_pensiun', $data['jenis_pensiun']);
+            $stmt->bindParam(':jenis_pensiun_id', $data['jenis_pensiun_id']);
             $stmt->bindParam(':status', $data['status']);
             $stmt->bindParam(':file_sk', $data['file_sk']);
             
@@ -396,6 +423,7 @@ class PensiunManager
             throw new Exception("Error saving pensiun data: " . $e->getMessage());
         }
     }
+
 
     // Get jenis pensiun list
     public function getJenisPensiun() {

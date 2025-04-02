@@ -40,10 +40,9 @@ try {
     }
     else if (isset($_GET['id'])) {
         $id = sanitize($_GET['id']);
-        $query = "SELECT p.*, pg.nip, pg.nama, pg.induk_unit, pg.unit_kerja, 
-                 CONCAT(pg.induk_unit, ' - ', pg.unit_kerja) as tempat_tugas 
+        $query = "SELECT p.*, jp.nama_jenis as jenis_pensiun_nama 
                  FROM pensiun p 
-                 JOIN pegawai pg ON p.pegawai_id = pg.id 
+                 LEFT JOIN jenis_pensiun jp ON p.jenis_pensiun_id = jp.id 
                  WHERE p.id = :id";
         
         $stmt = $pensiunManager->getConn()->prepare($query);
@@ -53,9 +52,20 @@ try {
         $response['data'] = $stmt->fetchAll();
         $response['status'] = true;
     } else {
-        $search = isset($_GET['search']) ? $_GET['search']['value'] : '';
-        $response['data'] = $pensiunManager->getAllPensiun($search);
-        $response['status'] = true;
+        $data = $pensiunManager->getAllPensiun($start, $length, $search, $order);
+        
+        // Add action buttons to each row
+        foreach ($data['data'] as &$row) {
+            $row['actions'] = '<button class="btn btn-sm btn-primary me-1" onclick="editPensiun(' . $row['id'] . ')"><i class="bi bi-pencil"></i></button>' .
+                             '<button class="btn btn-sm btn-danger" onclick="deletePensiun(' . $row['id'] . ')"><i class="bi bi-trash"></i></button>';
+        }
+        
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $data['total'],
+            'recordsFiltered' => $data['filtered'],
+            'data' => $data['data']
+        ];
     }
 } catch (Exception $e) {
     $response['message'] = $e->getMessage();

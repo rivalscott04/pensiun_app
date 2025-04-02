@@ -64,6 +64,7 @@
     </style>
 </head>
 <body class="bg-gray-50">
+    <?php include __DIR__ . '/toast.php'; ?>
     <nav class="bg-primary text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">

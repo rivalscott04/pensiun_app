@@ -154,6 +154,11 @@ function savePensiun(event) {
         return;
     }
 
+    if (!$('#jenis_pensiun').val()) {
+        showToast('error', 'Jenis pensiun harus dipilih');
+        return;
+    }
+
     const formData = new FormData($('#pensiunForm')[0]);
     
     // Log the form data for debugging

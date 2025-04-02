@@ -125,7 +125,7 @@ include __DIR__ . '/../components/header.php';
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Induk Unit</label>
-                    <input type="text" id="induk_unit"  name ="induk_unit" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
+                    <input type="text" id="induk_unit" name="induk_unit" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Unit Kerja</label>
@@ -158,7 +158,7 @@ include __DIR__ . '/../components/header.php';
                         <label for="file_sk" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                 </svg>
                                 <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau drag and drop</p>
                                 <p class="text-xs text-gray-500">PDF (Maks. 5MB)</p>
@@ -208,78 +208,89 @@ include __DIR__ . '/../components/header.php';
 </div>
 
 <script>
-let dataTable;
-let pollingInterval;
+    let dataTable;
+    let pollingInterval;
 
-// Document ready handler
-$(document).ready(function() {
-    // Initialize components
-    initializeDataTable();
-    initializeSelect2();
+    // Document ready handler
+    $(document).ready(function() {
+        // Initialize components
+        initializeDataTable();
+        initializeSelect2();
 
-    // Ensure modal is hidden on page load
-    $('#formModal').addClass('hidden');
-    $('#fileUploadSection').addClass('hidden');
-    $('#filePreview').addClass('hidden');
-});
+        // Ensure modal is hidden on page load
+        $('#formModal').addClass('hidden');
+        $('#fileUploadSection').addClass('hidden');
+        $('#filePreview').addClass('hidden');
+    });
 
-// Initialize DataTable
-function initializeDataTable() {
-    dataTable = $('#pensiunTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: '<?= BASE_URL ?>/api/pensiun-list.php',
-            type: 'POST',
-            data: function(d) {
-                return {
-                    draw: d.draw,
-                    start: d.start,
-                    length: d.length,
-                    search: d.search.value,
-                    order: d.order.map(function(order) {
-                        return {
-                            column: d.columns[order.column].data,
-                            dir: order.dir
-                        };
-                    })
-                };
-            }
-        },
-        columns: [
-            { data: 'nama' },
-            { data: 'nip' },
-            { 
-                data: 'tmt_pensiun',
-                render: function(data) {
-                    return data ? new Date(data).toISOString().split('T')[0] : '-';
-                }
-            },
-            { data: 'jenis_pensiun' },
-            { data: 'tempat_tugas' },
-            {
-                data: 'status',
-                render: function(data) {
-                    const classes = {
-                        'Menunggu': 'bg-yellow-100 text-yellow-800',
-                        'Diproses': 'bg-blue-100 text-blue-800',
-                        'Selesai': 'bg-green-100 text-green-800',
-                        'Ditolak': 'bg-red-100 text-red-800'
+    // Initialize DataTable
+    function initializeDataTable() {
+        if ($.fn.DataTable.isDataTable('#pensiunTable')) {
+            $('#pensiunTable').DataTable().destroy();
+        }
+
+        dataTable = $('#pensiunTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '<?= BASE_URL ?>/api/pensiun-list.php',
+                type: 'POST',
+                data: function(d) {
+                    return {
+                        draw: d.draw,
+                        start: d.start,
+                        length: d.length,
+                        search: d.search.value,
+                        order: d.order.map(function(order) {
+                            return {
+                                column: d.columns[order.column].data,
+                                dir: order.dir
+                            };
+                        })
                     };
-                    return `<span class="px-2 py-1 rounded-full text-xs font-medium ${classes[data] || 'bg-gray-100 text-gray-800'}">${data}</span>`;
                 }
             },
-            {
-                data: 'file_sk',
-                render: function(data) {
-                    if (!data) return '-';
-                    return `<a href="<?= BASE_URL ?>/uploads/${data}" target="_blank" class="text-primary hover:text-primary/90">Lihat File</a>`;
-                }
-            },
-            {
-                data: null,
-                render: function(data, type, row) {
-                    return `
+            columns: [{
+                    data: 'nama'
+                },
+                {
+                    data: 'nip'
+                },
+                {
+                    data: 'tmt_pensiun',
+                    render: function(data) {
+                        return data ? new Date(data).toISOString().split('T')[0] : '-';
+                    }
+                },
+                {
+                    data: 'jenis_pensiun_nama'
+                },
+                {
+                    data: 'tempat_tugas'
+                },
+                {
+                    data: 'status',
+                    render: function(data) {
+                        const classes = {
+                            'Menunggu': 'bg-yellow-100 text-yellow-800',
+                            'Diproses': 'bg-blue-100 text-blue-800',
+                            'Selesai': 'bg-green-100 text-green-800',
+                            'Ditolak': 'bg-red-100 text-red-800'
+                        };
+                        return `<span class="px-2 py-1 rounded-full text-xs font-medium ${classes[data] || 'bg-gray-100 text-gray-800'}">${data}</span>`;
+                    }
+                },
+                {
+                    data: 'file_sk',
+                    render: function(data) {
+                        if (!data) return '-';
+                        return `<a href="<?= BASE_URL ?>/uploads/${data}" target="_blank" class="text-primary hover:text-primary/90">Lihat File</a>`;
+                    }
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return `
                         <div class="flex space-x-2">
                             <button onclick="editPensiun(${row.id})" class="text-blue-600 hover:text-blue-800">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -293,298 +304,303 @@ function initializeDataTable() {
                             </button>
                         </div>
                     `;
+                    }
                 }
+            ],
+            order: [
+                [2, 'asc']
+            ],
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
             }
-        ],
-        order: [[2, 'asc']],
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
-        }
-    });
-
-    // Start polling
-    startPolling();
-}
-
-// Initialize Select2
-function initializeSelect2() {
-    $('#nip').select2({
-        placeholder: 'Masukkan NIP atau nama pegawai',
-        minimumInputLength: 3,
-        ajax: {
-            url: '<?= BASE_URL ?>/api/pegawai-search.php',
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    term: params.term
-                };
-            },
-            processResults: function(data) {
-                const results = data.map(pegawai => {
-                    return {
-                        id: pegawai.id,
-                        text: pegawai.text,
-                        pegawai: pegawai.pegawai
-                    };
-                });
-                return { results };
-            },
-            cache: true
-        }
-    }).on('select2:select', function(e) {
-        const pegawai = e.params.data.pegawai;
-        $('#pegawai_id').val(pegawai.id);
-        $('#nama').val(pegawai.nama);
-        $('#induk_unit').val(pegawai.induk_unit);
-        $('#unit_kerja').val(pegawai.unit_kerja);
-        $('#tmt_pensiun').val(new Date(pegawai.tmt_pensiun).toISOString().split('T')[0]);
-    });
-
-    // Load jenis pensiun
-    $.getJSON('<?= BASE_URL ?>/api/jenis-pensiun.php', function(data) {
-        const select = $('#jenis_pensiun');
-        select.empty();
-        select.append('<option value="">Pilih jenis pensiun</option>');
-        data.forEach(item => {
-            select.append(`<option value="${item.id}">${item.nama_jenis}</option>`);
         });
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.error('Error loading jenis pensiun:', textStatus, errorThrown);
+
+        // Start polling
+        startPolling();
+    }
+
+    // Initialize Select2
+    function initializeSelect2() {
+        $('#nip').select2({
+            placeholder: 'Masukkan NIP atau nama pegawai',
+            minimumInputLength: 3,
+            ajax: {
+                url: '<?= BASE_URL ?>/api/pegawai-search.php',
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        term: params.term
+                    };
+                },
+                processResults: function(data) {
+                    const results = data.map(pegawai => {
+                        return {
+                            id: pegawai.id,
+                            text: pegawai.text,
+                            pegawai: pegawai.pegawai
+                        };
+                    });
+                    return {
+                        results
+                    };
+                },
+                cache: true
+            }
+        }).on('select2:select', function(e) {
+            const pegawai = e.params.data.pegawai;
+            $('#pegawai_id').val(pegawai.id);
+            $('#nama').val(pegawai.nama);
+            $('#induk_unit').val(pegawai.induk_unit);
+            $('#unit_kerja').val(pegawai.unit_kerja);
+            $('#tmt_pensiun').val(new Date(pegawai.tmt_pensiun).toISOString().split('T')[0]);
+        });
+
+        // Load jenis pensiun
+        $.getJSON('<?= BASE_URL ?>/api/jenis-pensiun.php', function(data) {
+            const select = $('#jenis_pensiun');
+            select.empty();
+            select.append('<option value="">Pilih jenis pensiun</option>');
+            data.forEach(item => {
+                select.append(`<option value="${item.id}">${item.nama_jenis}</option>`);
+            });
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error('Error loading jenis pensiun:', textStatus, errorThrown);
+        });
+    }
+
+    // Show/hide file upload based on status
+    $('#status').change(function() {
+        $('#fileUploadSection').toggleClass('hidden', $(this).val() !== 'Selesai');
+        if ($(this).val() === 'Selesai') {
+            $('#file_sk').prop('required', true);
+        } else {
+            $('#file_sk').prop('required', false);
+        }
     });
-}
 
-// Show/hide file upload based on status
-$('#status').change(function() {
-    $('#fileUploadSection').toggleClass('hidden', $(this).val() !== 'Selesai');
-    if ($(this).val() === 'Selesai') {
-        $('#file_sk').prop('required', true);
-    } else {
-        $('#file_sk').prop('required', false);
-    }
-});
-
-// Modal functions
-function openModal() {
-    const modal = $('#formModal');
-    const modalContent = modal.find('.relative');
-    modal.removeClass('hidden');
-    setTimeout(() => {
-        modalContent.removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100');
-    }, 50);
-    $('#modalTitle').text('Tambah Data Pensiun');
-    $('#pensiunForm')[0].reset();
-    $('#pensiun_id').val('');
-    $('#pegawai_id').val('');
-    $('#nip').val(null).trigger('change');
-    $('#fileUploadSection').addClass('hidden');
-}
-
-function closeModal() {
-    const modal = $('#formModal');
-    const modalContent = modal.find('.relative');
-    modalContent.removeClass('scale-100 opacity-100').addClass('scale-95 opacity-0');
-    setTimeout(() => {
-        modal.addClass('hidden');
+    // Modal functions
+    function openModal() {
+        const modal = $('#formModal');
+        const modalContent = modal.find('.relative');
+        modal.removeClass('hidden');
+        setTimeout(() => {
+            modalContent.removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100');
+        }, 50);
+        $('#modalTitle').text('Tambah Data Pensiun');
         $('#pensiunForm')[0].reset();
-    }, 200);
-}
-
-// Validasi form sebelum submit
-function validateForm() {
-    const nip = $('#nip').val();
-    const jenisPensiun = $('#jenis_pensiun').val();
-    const status = $('#status').val();
-    const fileInput = $('#file_sk')[0];
-
-    if (!nip) {
-        showToast('error', 'Pilih pegawai terlebih dahulu');
-        return false;
+        $('#pensiun_id').val('');
+        $('#pegawai_id').val('');
+        $('#nip').val(null).trigger('change');
+        $('#fileUploadSection').addClass('hidden');
     }
 
-    if (!jenisPensiun) {
-        showToast('error', 'Pilih jenis pensiun');
-        return false;
+    function closeModal() {
+        const modal = $('#formModal');
+        const modalContent = modal.find('.relative');
+        modalContent.removeClass('scale-100 opacity-100').addClass('scale-95 opacity-0');
+        setTimeout(() => {
+            modal.addClass('hidden');
+            $('#pensiunForm')[0].reset();
+        }, 200);
     }
 
-    if (!status) {
-        showToast('error', 'Pilih status');
-        return false;
-    }
+    // Validasi form sebelum submit
+    function validateForm() {
+        const nip = $('#nip').val();
+        const jenisPensiun = $('#jenis_pensiun').val();
+        const status = $('#status').val();
+        const fileInput = $('#file_sk')[0];
 
-    if (status === 'Selesai' && fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const maxSize = 5 * 1024 * 1024; // 5MB
-        const allowedTypes = ['application/pdf'];
-
-        if (file.size > maxSize) {
-            showToast('error', 'Ukuran file terlalu besar (maksimal 5MB)');
+        if (!nip) {
+            showToast('Pilih pegawai terlebih dahulu', 'error');
             return false;
         }
 
-        if (!allowedTypes.includes(file.type)) {
-            showToast('error', 'Format file tidak valid (hanya PDF yang diizinkan)');
+        if (!jenisPensiun) {
+            showToast('Pilih jenis pensiun', 'error');
             return false;
         }
+
+        if (!status) {
+            showToast('Pilih status', 'error');
+            return false;
+        }
+
+        if (status === 'Selesai' && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            const allowedTypes = ['application/pdf'];
+
+            if (file.size > maxSize) {
+                showToast('Ukuran file terlalu besar (maksimal 5MB)', 'error');
+                return false;
+            }
+
+            if (!allowedTypes.includes(file.type)) {
+                showToast('Format file tidak valid (hanya PDF yang diizinkan)', 'error');
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    return true;
-}
-
-// Preview file sebelum upload
-function removeFile() {
-    $('#file_sk').val('');
-    $('#filePreview').addClass('hidden');
-    $('#fileName').text('');
-    $('#fileSize').text('');
-}
-
-$('#file_sk').change(function() {
-    const file = this.files[0];
-    if (file) {
-        const fileSize = (file.size / 1024 / 1024).toFixed(2); // Convert to MB
-        $('#fileName').text(file.name);
-        $('#fileSize').text(`${fileSize} MB`);
-        $('#filePreview').removeClass('hidden');
-    } else {
+    // Preview file sebelum upload
+    function removeFile() {
+        $('#file_sk').val('');
         $('#filePreview').addClass('hidden');
         $('#fileName').text('');
         $('#fileSize').text('');
     }
-});
 
-// Save pensiun data
-function savePensiun(event) {
-    event.preventDefault();
-
-    if (!validateForm()) {
-        return;
-    }
-
-    const formData = new FormData($('#pensiunForm')[0]);
-    // Show loading state
-    const submitBtn = $(event.target).find('button[type="submit"]');
-    const originalText = submitBtn.html();
-    submitBtn.html('<svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Menyimpan...').prop('disabled', true);
-    
-    $.ajax({
-        url: '<?= BASE_URL ?>/api/pensiun-save.php',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            if (response.status) {
-                showSuccess('Berhasil', response.message);
-                closeModal();
-                reloadData();
-            } else {
-                showToast('error', response.message);
-            }
-        },
-        error: function() {
-            showToast('error', 'Terjadi kesalahan sistem');
-        },
-        complete: function() {
-            // Restore button state
-            submitBtn.html(originalText).prop('disabled', false);
+    $('#file_sk').change(function() {
+        const file = this.files[0];
+        if (file) {
+            const fileSize = (file.size / 1024 / 1024).toFixed(2); // Convert to MB
+            $('#fileName').text(file.name);
+            $('#fileSize').text(`${fileSize} MB`);
+            $('#filePreview').removeClass('hidden');
+        } else {
+            $('#filePreview').addClass('hidden');
+            $('#fileName').text('');
+            $('#fileSize').text('');
         }
     });
-}
 
-// Edit pensiun
-function editPensiun(id) {
-    // Tampilkan dialog konfirmasi untuk memilih metode edit
-    Swal.fire({
-        title: 'Pilih Metode Edit',
-        text: 'Pilih metode untuk mengedit data pensiun',
-        icon: 'question',
-        showCancelButton: true,
-        showDenyButton: true,
-        confirmButtonColor: '#4b49ac',
-        cancelButtonColor: '#6c757d',
-        denyButtonColor: '#3085d6',
-        confirmButtonText: 'Edit di Modal',
-        denyButtonText: 'Edit di Halaman Terpisah',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Edit menggunakan modal
-            editPensiunModal(id);
-        } else if (result.isDenied) {
-            // Edit menggunakan halaman terpisah
-            window.location.href = `<?= BASE_URL ?>/pages/edit.php?id=${id}`;
+    // Save pensiun data
+    function savePensiun(event) {
+        event.preventDefault();
+
+        if (!validateForm()) {
+            return;
         }
-    });
-}
 
-// Edit pensiun dengan modal
-function editPensiunModal(id) {
-    $.getJSON(`<?= BASE_URL ?>/api/pensiun-list.php?id=${id}`, function(response) {
-        const data = response.data[0];
-        $('#modalTitle').text('Edit Data Pensiun');
-        $('#pensiun_id').val(data.id);
-        $('#pegawai_id').val(data.pegawai_id);
-        
-        // Create a new option and update Select2
-        const option = new Option(`${data.nip} - ${data.nama}`, data.pegawai_id, true, true);
-        $('#nip').append(option).trigger('change');
-        
-        $('#nama').val(data.nama);
-        $('#induk_unit').val(data.induk_unit);
-        $('#unit_kerja').val(data.unit_kerja);
-        $('#tmt_pensiun').val(new Date(data.tmt_pensiun).toLocaleDateString('id-ID'));
-        $('#jenis_pensiun').val(data.jenis_pensiun);
-        $('#status').val(data.status).trigger('change');
-        
-        $('#formModal').removeClass('hidden');
-    });
-}
+        const formData = new FormData($('#pensiunForm')[0]);
+        // Show loading state
+        const submitBtn = $(event.target).find('button[type="submit"]');
+        const originalText = submitBtn.html();
+        submitBtn.html('<svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Menyimpan...').prop('disabled', true);
 
-// Delete pensiun
-function deletePensiun(id) {
-    showConfirm('Hapus Data', 'Apakah Anda yakin ingin menghapus data ini?', function() {
-        $.post(`<?= BASE_URL ?>/api/pensiun-save.php`, { delete: true, id: id }, function(response) {
-            if (response.status) {
-                showSuccess('Berhasil', response.message);
-                reloadData();
-            } else {
-                showToast('error', response.message);
+        $.ajax({
+            url: '<?= BASE_URL ?>/api/pensiun-save.php',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.status) {
+                    showToast(response.message, 'success');
+                    closeModal();
+                    reloadData();
+                } else {
+                    showToast(response.message, 'error');
+                }
+            },
+            error: function() {
+                showToast('Terjadi kesalahan sistem', 'error');
+            },
+            complete: function() {
+                // Restore button state
+                submitBtn.html(originalText).prop('disabled', false);
             }
         });
-    });
-}
-
-// Polling function
-function startPolling() {
-    pollingInterval = setInterval(reloadData, 10000); // Poll every 10 seconds
-}
-
-function reloadData() {
-    dataTable.ajax.reload(null, false);
-    
-    // Update summary
-    $.getJSON('<?= BASE_URL ?>/api/pensiun-list.php?summary=true', function(response) {
-        const summary = response.summary;
-        Object.keys(summary).forEach(key => {
-            $(`[data-summary="${key}"]`).text(summary[key]);
-        });
-    });
-}
-
-// Cleanup on page unload
-$(window).on('unload', function() {
-    if (pollingInterval) {
-        clearInterval(pollingInterval);
     }
-});
 
-function previewFile() {
-    const file = $('#file_sk')[0].files[0];
-    if (!file) return;
+    // Edit pensiun
+    function editPensiun(id) {
+        $.getJSON(`<?= BASE_URL ?>/api/pensiun-detail.php?id=${id}`, function(data) {
+            $('#modalTitle').text('Edit Data Pensiun');
+            $('#pensiunForm')[0].reset();
 
-    const fileUrl = URL.createObjectURL(file);
-    const previewModal = $(`
+            $('#pensiun_id').val(data.id);
+            $('#pegawai_id').val(data.pegawai_id);
+
+            const option = new Option(`${data.nip} - ${data.nama}`, data.nip, true, true);
+            $('#nip').empty().append(option).trigger('change');
+            $('#nip').prop('disabled', true);
+
+            $('#nama').val(data.nama).prop('readonly', true);
+            $('#induk_unit').val(data.induk_unit).prop('readonly', true);
+            $('#unit_kerja').val(data.unit_kerja).prop('readonly', true);
+            $('#tmt_pensiun').val(new Date(data.tmt_pensiun).toISOString().split('T')[0]).prop('readonly', true);
+
+            $('#jenis_pensiun').val(data.jenis_pensiun).prop('disabled', true);
+            $('#status').val(data.status).trigger('change');
+
+            // Tampilkan file upload jika statusnya 'Selesai'
+            if (data.status === 'Selesai') {
+                $('#fileUploadSection').removeClass('hidden');
+            } else {
+                $('#fileUploadSection').addClass('hidden');
+            }
+
+            $('#formModal').removeClass('hidden');
+            setTimeout(() => {
+                $('.relative.top-20').removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100');
+            }, 50);
+        });
+    }
+
+
+    // Delete pensiun
+    function deletePensiun(id) {
+        Swal.fire({
+            title: 'Hapus Data',
+            text: 'Apakah Anda yakin ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4b49ac',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post(`<?= BASE_URL ?>/api/pensiun-save.php`, {
+                    delete: true,
+                    id: id
+                }, function(response) {
+                    if (response.status) {
+                        showToast(response.message, 'success');
+                        reloadData();
+                    } else {
+                        showToast(response.message, 'error');
+                    }
+                });
+            }
+        });
+    }
+
+    // Polling function
+    function startPolling() {
+        pollingInterval = setInterval(reloadData, 10000); // Poll every 10 seconds
+    }
+
+    function reloadData() {
+        dataTable.ajax.reload(null, false);
+
+        // Update summary
+        $.getJSON('<?= BASE_URL ?>/api/pensiun-list.php?summary=true', function(response) {
+            const summary = response.summary;
+            Object.keys(summary).forEach(key => {
+                $(`[data-summary="${key}"]`).text(summary[key]);
+            });
+        });
+    }
+
+    // Cleanup on page unload
+    $(window).on('unload', function() {
+        if (pollingInterval) {
+            clearInterval(pollingInterval);
+        }
+    });
+
+    function previewFile() {
+        const file = $('#file_sk')[0].files[0];
+        if (!file) return;
+
+        const fileUrl = URL.createObjectURL(file);
+        const previewModal = $(`
         <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50" id="filePreviewModal">
             <div class="relative top-20 mx-auto p-5 border w-full max-w-4xl h-3/4 shadow-lg rounded-lg bg-white">
                 <div class="flex justify-between items-center mb-4">
@@ -599,29 +615,32 @@ function previewFile() {
             </div>
         </div>
     `).appendTo('body');
-}
+    }
 
-function closeFilePreview() {
-    $('#filePreviewModal').remove();
-}
+    function closeFilePreview() {
+        $('#filePreviewModal').remove();
+    }
 </script>
 
 <style>
-.select2-container {
-    width: 100% !important;
-}
-.select2-container--default .select2-selection--single {
-    height: 38px !important;
-    border-color: #D1D5DB !important;
-    border-radius: 0.375rem !important;
-}
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 38px !important;
-    padding-left: 0.75rem !important;
-}
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 36px !important;
-}
+    .select2-container {
+        width: 100% !important;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 38px !important;
+        border-color: #D1D5DB !important;
+        border-radius: 0.375rem !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 38px !important;
+        padding-left: 0.75rem !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 36px !important;
+    }
 </style>
 
 <?php include __DIR__ . '/../components/footer.php'; ?>

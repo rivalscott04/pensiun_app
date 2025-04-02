@@ -347,3 +347,356 @@
 )
 
 [2025-04-02 11:48:41] Exception: Jenis pensiun harus diisi
+[2025-04-02 18:12:00] POST data: Array
+(
+    [nip] => 199605292023212024
+    [nama] => AHDA SABILA, S.Sos
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-06-01
+    [jenis_pensiun] => 2
+    [status] => Selesai
+)
+
+[2025-04-02 18:12:00] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 31-Program-Studi-Arsitektur-Fakultas-Teknik-Universitas-Mata.pdf
+            [full_path] => 31-Program-Studi-Arsitektur-Fakultas-Teknik-Universitas-Mata.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\php2CF1.tmp
+            [error] => 0
+            [size] => 528370
+        )
+
+)
+
+[2025-04-02 18:12:00] NIP dari POST: 199605292023212024
+[2025-04-02 18:12:00] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743592320_67ed1b80d924f.pdf
+[2025-04-02 18:12:00] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Selesai
+    [file_sk] => SK_1743592320_67ed1b80d924f.pdf
+    [nip] => 199605292023212024
+)
+
+[2025-04-02 18:12:00] Exception: Jenis pensiun harus diisi
+[2025-04-02 18:13:36] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 1
+    [status] => Diproses
+)
+
+[2025-04-02 18:13:36] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-02 18:13:36] NIP dari POST: 199604212024211017
+[2025-04-02 18:13:36] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 1
+    [status] => Diproses
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 18:13:36] Exception: Jenis pensiun harus diisi
+[2025-04-02 18:16:17] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Menunggu
+)
+
+[2025-04-02 18:16:17] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-02 18:16:17] NIP dari POST: 199604212024211017
+[2025-04-02 18:16:17] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Menunggu
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 18:29:11] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Diproses
+)
+
+[2025-04-02 18:29:11] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-02 18:29:11] NIP dari POST: 199604212024211017
+[2025-04-02 18:29:11] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Diproses
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 18:29:11] Exception: Error saving pensiun data: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'sdma.unit_kerja' doesn't exist
+[2025-04-02 18:29:16] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Diproses
+)
+
+[2025-04-02 18:29:16] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-02 18:29:16] NIP dari POST: 199604212024211017
+[2025-04-02 18:29:16] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Diproses
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 18:29:16] Exception: Error saving pensiun data: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'sdma.unit_kerja' doesn't exist
+[2025-04-02 18:30:49] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Diproses
+)
+
+[2025-04-02 18:30:49] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-02 18:30:49] NIP dari POST: 199604212024211017
+[2025-04-02 18:30:49] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Diproses
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 19:18:13] POST data: Array
+(
+    [delete] => true
+    [id] => 3
+)
+
+[2025-04-02 19:18:13] FILES data: Array
+(
+)
+
+[2025-04-02 19:18:31] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 1
+    [status] => Selesai
+)
+
+[2025-04-02 19:18:31] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => qwer.pdf
+            [full_path] => qwer.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\php1328.tmp
+            [error] => 0
+            [size] => 338786
+        )
+
+)
+
+[2025-04-02 19:18:31] NIP dari POST: 199604212024211017
+[2025-04-02 19:18:31] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743596311_67ed2b17ee205.pdf
+[2025-04-02 19:18:31] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 1
+    [status] => Selesai
+    [file_sk] => SK_1743596311_67ed2b17ee205.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 19:29:31] POST data: Array
+(
+    [delete] => true
+    [id] => 4
+)
+
+[2025-04-02 19:29:31] FILES data: Array
+(
+)
+
+[2025-04-02 21:18:06] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 1
+    [status] => Selesai
+)
+
+[2025-04-02 21:18:06] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => qwer.pdf
+            [full_path] => qwer.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\php8B83.tmp
+            [error] => 0
+            [size] => 338786
+        )
+
+)
+
+[2025-04-02 21:18:06] NIP dari POST: 199604212024211017
+[2025-04-02 21:18:06] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743603486_67ed471e3210d.pdf
+[2025-04-02 21:18:06] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 1
+    [status] => Selesai
+    [file_sk] => SK_1743603486_67ed471e3210d.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 21:18:31] POST data: Array
+(
+    [delete] => true
+    [id] => 5
+)
+
+[2025-04-02 21:18:31] FILES data: Array
+(
+)
+
+[2025-04-02 22:27:40] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Ditolak
+)
+
+[2025-04-02 22:27:40] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-02 22:27:40] NIP dari POST: 199604212024211017
+[2025-04-02 22:27:40] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Ditolak
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 22:27:48] POST data: Array
+(
+    [delete] => true
+    [id] => 6
+)
+
+[2025-04-02 22:27:48] FILES data: Array
+(
+)
+
