@@ -27,15 +27,13 @@ function showToast(message, type = 'success') {
     if (type === 'success') {
         toast.querySelector('.flex').classList.add('text-green-800', 'bg-green-50');
         icon.innerHTML = '<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>';
+        toastMessage.textContent = 'Berhasil' + (message ? ': ' + message : '');
     } else if (type === 'error') {
         toast.querySelector('.flex').classList.add('text-red-800', 'bg-red-50');
         icon.innerHTML = '<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>';
-    } else if (type === 'warning') {
-        toast.querySelector('.flex').classList.add('text-yellow-800', 'bg-yellow-50');
-        icon.innerHTML = '<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm.975 13.5a1.5 1.5 0 1 1-1.95 0 1.5 1.5 0 0 1 1.95 0Zm-.975-3a1 1 0 0 1-1-1v-4a1 1 0 0 1 2 0v4a1 1 0 0 1-1 1Z"/>';
-    } else if (type === 'info') {
-        toast.querySelector('.flex').classList.add('text-blue-800', 'bg-blue-50');
-        icon.innerHTML = '<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>';
+        toastMessage.textContent = 'Gagal' + (message ? ': ' + message : '');
+    } else {
+        toastMessage.textContent = message;
     }
 
     toastMessage.textContent = message;

@@ -161,34 +161,38 @@ function savePensiun(event) {
 
     const formData = new FormData($('#pensiunForm')[0]);
     
-    // Log the form data for debugging
-    console.log('Form data:', {
-        nip: $('#nip').val(),
-        jenis_pensiun: $('#jenis_pensiun').val(),
-        status: $('#status').val()
-    });
-    
-    $.ajax({
-        url: '<?= BASE_URL ?>/api/pensiun-save.php',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            if (response.status) {
-                showSuccess('Berhasil', response.message);
-                setTimeout(function() {
-                    window.location.href = '<?= BASE_URL ?>';
-                }, 1500);
-            } else {
-                showToast('error', response.message);
+    // Show confirmation dialog
+    showConfirm('Konfirmasi', 'Apakah anda yakin ingin menyimpan data ini?', function() {
+        // Log the form data for debugging
+        console.log('Form data:', {
+            nip: $('#nip').val(),
+            jenis_pensiun: $('#jenis_pensiun').val(),
+            status: $('#status').val()
+        });
+        
+        $.ajax({
+            url: '<?= BASE_URL ?>/api/pensiun-save.php',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.status) {
+                    showToast('success', response.message);
+                    setTimeout(function() {
+                        window.location.href = '<?= BASE_URL ?>';
+                    }, 1500);
+                } else {
+                    showToast('error', response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Ajax error:', xhr.responseText);
+                showToast('error', 'Terjadi kesalahan sistem');
             }
-        },
-        error: function(xhr, status, error) {
-            console.error('Ajax error:', xhr.responseText);
-            showToast('error', 'Terjadi kesalahan sistem');
-        }
+        });
     });
+
 }
 
 function handleFileSelect(input) {

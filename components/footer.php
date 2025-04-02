@@ -14,10 +14,22 @@
             }
         });
 
-        function showToast(icon, message) {
+        function showToast(type, message) {
+            let icon, title;
+            if (type === 'success') {
+                icon = 'success';
+                title = 'Berhasil';
+            } else if (type === 'error') {
+                icon = 'error';
+                title = 'Gagal';
+            } else {
+                icon = type;
+                title = message;
+                return;
+            }
             Toast.fire({
                 icon: icon,
-                title: message
+                title: title + (message ? ': ' + message : '')
             });
         }
 

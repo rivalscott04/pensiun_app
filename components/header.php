@@ -1,11 +1,12 @@
 <?php require_once __DIR__ . '/../config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= APP_NAME ?></title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -40,6 +41,9 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+ <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <!-- Custom Styles -->
     <style>
         .select2-container--default .select2-selection--single {
@@ -48,14 +52,17 @@
             border-radius: 0.375rem;
             border-color: rgb(209 213 219);
         }
+
         .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 36px;
         }
+
         .dataTables_wrapper .dataTables_filter input {
             border-radius: 0.375rem;
             border: 1px solid rgb(209 213 219);
             padding: 0.5rem;
         }
+
         .dataTables_wrapper .dataTables_length select {
             border-radius: 0.375rem;
             border: 1px solid rgb(209 213 219);
@@ -63,6 +70,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-50">
     <?php include __DIR__ . '/toast.php'; ?>
     <nav class="bg-primary text-white shadow-md">
@@ -84,6 +92,22 @@
                         </svg>
                         Data Pegawai
                     </a>
+                    <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                        <button @click="open = !open" class="flex items-center px-3 py-2 rounded-md hover:bg-primary-light transition-all" :class="{ 'bg-white/10': open }">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            </svg>
+                            <?= isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'User' ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 transform transition-transform duration-200" :class="{ 'rotate-180': open }" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="<?= BASE_URL ?>/logout.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition-colors duration-200">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
