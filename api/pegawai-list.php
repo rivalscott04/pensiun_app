@@ -22,7 +22,7 @@ $search = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
 $order = isset($_POST['order']) ? $_POST['order'] : [];
 
 // Convert DataTables column index to actual column names
-$columns = ['nip', 'nama', 'induk_unit', 'unit_kerja', 'tmt_pensiun'];
+$columns = ['nip', 'nama', 'induk_unit', 'unit_kerja', 'tmt_pensiun', 'golongan'];
 if (!empty($order)) {
     foreach ($order as &$ord) {
         if (isset($ord['column']) && isset($columns[$ord['column']])) {

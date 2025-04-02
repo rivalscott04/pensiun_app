@@ -10,25 +10,61 @@ include __DIR__ . '/../components/header.php';
 
 <!-- Summary Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
-        <h3 class="text-gray-500 text-sm font-medium">Total Data</h3>
-        <p class="text-2xl font-semibold text-primary" data-summary="total"><?= $summary['total'] ?></p>
+    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-primary border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
+        <div class="mr-4 text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div>
+            <h3 class="text-gray-500 text-sm font-medium">Total Data</h3>
+            <p class="text-2xl font-semibold text-primary" data-summary="total"><?= $summary['total'] ?></p>
+        </div>
     </div>
-    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
-        <h3 class="text-gray-500 text-sm font-medium">Selesai</h3>
-        <p class="text-2xl font-semibold text-green-600" data-summary="selesai"><?= $summary['selesai'] ?></p>
+    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-supporting-200 border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
+        <div class="mr-4 text-supporting-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div>
+            <h3 class="text-gray-500 text-sm font-medium">Selesai</h3>
+            <p class="text-2xl font-semibold text-supporting-200" data-summary="selesai"><?= $summary['selesai'] ?></p>
+        </div>
     </div>
-    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
-        <h3 class="text-gray-500 text-sm font-medium">Diproses</h3>
-        <p class="text-2xl font-semibold text-blue-600" data-summary="diproses"><?= $summary['diproses'] ?></p>
+    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-supporting-100 border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
+        <div class="mr-4 text-supporting-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div>
+            <h3 class="text-gray-500 text-sm font-medium">Diproses</h3>
+            <p class="text-2xl font-semibold text-supporting-100" data-summary="diproses"><?= $summary['diproses'] ?></p>
+        </div>
     </div>
-    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
-        <h3 class="text-gray-500 text-sm font-medium">Menunggu</h3>
-        <p class="text-2xl font-semibold text-yellow-600" data-summary="menunggu"><?= $summary['menunggu'] ?></p>
+    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-secondary border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
+        <div class="mr-4 text-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div>
+            <h3 class="text-gray-500 text-sm font-medium">Menunggu</h3>
+            <p class="text-2xl font-semibold text-secondary" data-summary="menunggu"><?= $summary['menunggu'] ?></p>
+        </div>
     </div>
-    <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
-        <h3 class="text-gray-500 text-sm font-medium">Ditolak</h3>
-        <p class="text-2xl font-semibold text-red-600" data-summary="ditolak"><?= $summary['ditolak'] ?></p>
+    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-supporting-300 border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
+        <div class="mr-4 text-supporting-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div>
+            <h3 class="text-gray-500 text-sm font-medium">Ditolak</h3>
+            <p class="text-2xl font-semibold text-supporting-300" data-summary="ditolak"><?= $summary['ditolak'] ?></p>
+        </div>
     </div>
 </div>
 
@@ -63,8 +99,8 @@ include __DIR__ . '/../components/header.php';
 </div>
 
 <!-- Modal Form -->
-<div id="formModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-    <div class="relative top-20 mx-auto p-5 border w-full max-w-xl shadow-lg rounded-lg bg-white">
+<div id="formModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full backdrop-blur-sm transition-all duration-300">
+    <div class="relative top-20 mx-auto p-5 border w-full max-w-xl shadow-lg rounded-lg bg-white transform transition-all duration-300 scale-95 opacity-0">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-semibold text-gray-800" id="modalTitle">Tambah Data Pensiun</h3>
             <button onclick="closeModal()" class="text-gray-600 hover:text-gray-800">
@@ -75,34 +111,30 @@ include __DIR__ . '/../components/header.php';
         </div>
 
         <form id="pensiunForm" onsubmit="savePensiun(event)">
-            <input type="hidden" id="pensiun_id" name="id">
-            <input type="hidden" id="pegawai_id" name="pegawai_id">
-            <!-- Hidden field for NIP with unique ID -->
-            <input type="hidden" id="nip_hidden" name="nip">
 
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">NIP</label>
-                    <select id="nip_select" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"></select>
+                    <select id="nip" name="nip" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"></select>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nama</label>
-                    <input type="text" id="nama" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
+                    <input type="text" id="nama" name="nama" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Induk Unit</label>
-                    <input type="text" id="induk_unit" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
+                    <input type="text" id="induk_unit"  name ="induk_unit" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Unit Kerja</label>
-                    <input type="text" id="unit_kerja" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
+                    <input type="text" id="unit_kerja" name="unit_kerja" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">TMT Pensiun</label>
-                    <input type="text" id="tmt_pensiun" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
+                    <input type="text" id="tmt_pensiun" name="tmt_pensiun" class="mt-1 w-full rounded-md border-gray-300 bg-gray-50" readonly>
                 </div>
 
                 <div>
@@ -315,7 +347,7 @@ function initializeSelect2() {
         select.empty();
         select.append('<option value="">Pilih jenis pensiun</option>');
         data.forEach(item => {
-            select.append(`<option value="${item.nama_jenis}">${item.nama_jenis}</option>`);
+            select.append(`<option value="${item.id}">${item.nama_jenis}</option>`);
         });
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.error('Error loading jenis pensiun:', textStatus, errorThrown);
@@ -334,7 +366,12 @@ $('#status').change(function() {
 
 // Modal functions
 function openModal() {
-    $('#formModal').removeClass('hidden');
+    const modal = $('#formModal');
+    const modalContent = modal.find('.relative');
+    modal.removeClass('hidden');
+    setTimeout(() => {
+        modalContent.removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100');
+    }, 50);
     $('#modalTitle').text('Tambah Data Pensiun');
     $('#pensiunForm')[0].reset();
     $('#pensiun_id').val('');
@@ -344,18 +381,23 @@ function openModal() {
 }
 
 function closeModal() {
-    $('#formModal').addClass('hidden');
-    $('#pensiunForm')[0].reset();
+    const modal = $('#formModal');
+    const modalContent = modal.find('.relative');
+    modalContent.removeClass('scale-100 opacity-100').addClass('scale-95 opacity-0');
+    setTimeout(() => {
+        modal.addClass('hidden');
+        $('#pensiunForm')[0].reset();
+    }, 200);
 }
 
 // Validasi form sebelum submit
 function validateForm() {
-    const pegawaiId = $('#pegawai_id').val();
+    const nip = $('#nip').val();
     const jenisPensiun = $('#jenis_pensiun').val();
     const status = $('#status').val();
     const fileInput = $('#file_sk')[0];
 
-    if (!pegawaiId) {
+    if (!nip) {
         showToast('error', 'Pilih pegawai terlebih dahulu');
         return false;
     }
@@ -420,7 +462,6 @@ function savePensiun(event) {
     }
 
     const formData = new FormData($('#pensiunForm')[0]);
-    
     // Show loading state
     const submitBtn = $(event.target).find('button[type="submit"]');
     const originalText = submitBtn.html();

@@ -2,13 +2,21 @@
 
 require_once __DIR__ . '/../config/db.php';
 
-class PensiunManager {
+class PensiunManager
+{
     private $db;
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = new Database();
         $this->conn = $this->db->getConnection();
+    }
+
+    // Getter untuk ambil koneksi
+    public function getConn()
+    {
+        return $this->conn;
     }
 
     // Get summary data
@@ -174,7 +182,54 @@ class PensiunManager {
     // Get summary of pegawai by kabupaten/kota
     public function getPegawaiByKabupaten() {
         try {
-            $query = "SELECT induk_unit, COUNT(*) as total FROM pegawai GROUP BY induk_unit ORDER BY induk_unit ASC";
+            // Insert data for missing locations if they don't exist
+            $missingLocations = [
+                'Kantor Kementerian Agama Kota Bima',
+                'Kantor Kementerian Agama Kota Mataram',
+                'Kantor Kementerian Agama Kabupaten Sumbawa'
+            ];
+
+            foreach ($missingLocations as $location) {
+                $checkQuery = "SELECT COUNT(*) as count FROM pegawai WHERE induk_unit = :location";
+                $stmt = $this->conn->prepare($checkQuery);
+                $stmt->bindParam(':location', $location);
+                $stmt->execute();
+                
+                if ($stmt->fetch()['count'] == 0) {
+                    $timestamp = time();
+                    $locationCode = substr(md5($location), 0, 4);
+                    $randomStr = bin2hex(random_bytes(4));
+                    $uniqueNip = 'PLACEHOLDER_' . $timestamp . '_' . $locationCode . '_' . $randomStr;
+                    $insertQuery = "INSERT INTO pegawai (nip, nama, induk_unit, unit_kerja) VALUES (:nip, 'placeholder', :location, 'placeholder')";
+                    $stmt = $this->conn->prepare($insertQuery);
+                    $stmt->bindParam(':nip', $uniqueNip);
+                    $stmt->bindParam(':location', $location);
+                    $stmt->execute();
+                    usleep(1000); // Add a small delay to ensure unique timestamps
+                }
+            }
+
+            $query = "SELECT 
+                CASE 
+                    WHEN induk_unit LIKE 'Kanwil Kementerian Agama%' THEN 'Kanwil Kementerian Agama NTB'
+                    WHEN induk_unit LIKE 'Kantor Kementerian Agama%' THEN 
+                        REPLACE(
+                            REPLACE(induk_unit, 'Kantor Kementerian Agama ', ''),
+                            'Provinsi Nusa Tenggara Barat',
+                            ''
+                        )
+                END as induk_unit,
+                COUNT(*) as total 
+                FROM pegawai 
+                WHERE induk_unit LIKE 'Kantor Kementerian Agama%' 
+                OR induk_unit LIKE 'Kanwil Kementerian Agama%'
+                GROUP BY induk_unit 
+                ORDER BY 
+                CASE 
+                    WHEN induk_unit LIKE 'Kanwil%' THEN 1 
+                    ELSE 2 
+                END, 
+                induk_unit ASC";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll();

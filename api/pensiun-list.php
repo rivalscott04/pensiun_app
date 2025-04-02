@@ -46,7 +46,7 @@ try {
                  JOIN pegawai pg ON p.pegawai_id = pg.id 
                  WHERE p.id = :id";
         
-        $stmt = $pensiunManager->conn->prepare($query);
+        $stmt = $pensiunManager->getConn()->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         

@@ -1,0 +1,349 @@
+[2025-04-01 21:27:07] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => APS
+    [status] => Selesai
+)
+
+[2025-04-01 21:27:07] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => Website_Testing_Proposal.pdf
+            [full_path] => Website_Testing_Proposal.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\php71CA.tmp
+            [error] => 0
+            [size] => 2589
+        )
+
+)
+
+[2025-04-01 21:27:07] NIP dari POST: 199604212024211017
+[2025-04-01 21:34:09] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => BUP
+    [status] => Selesai
+)
+
+[2025-04-01 21:34:09] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => Proposal_Wordpress.pdf
+            [full_path] => Proposal_Wordpress.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\phpE3D1.tmp
+            [error] => 0
+            [size] => 513656
+        )
+
+)
+
+[2025-04-01 21:34:09] NIP dari POST: 199604212024211017
+[2025-04-01 21:34:09] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743518049_67ebf961d99f8.pdf
+[2025-04-01 21:34:09] Data yang akan disimpan: Array
+(
+    [jenis_pensiun] => BUP
+    [status] => Selesai
+    [file_sk] => SK_1743518049_67ebf961d99f8.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-01 21:34:09] Exception: Error saving pensiun data: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'jenis_pensiun' in 'field list'
+[2025-04-01 21:37:29] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => APS
+    [status] => Selesai
+)
+
+[2025-04-01 21:37:29] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => Proposal_Wordpress.pdf
+            [full_path] => Proposal_Wordpress.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\phpF047.tmp
+            [error] => 0
+            [size] => 513656
+        )
+
+)
+
+[2025-04-01 21:37:29] NIP dari POST: 199604212024211017
+[2025-04-01 21:37:29] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743518249_67ebfa29a72b7.pdf
+[2025-04-01 21:37:29] Data yang akan disimpan: Array
+(
+    [jenis_pensiun] => APS
+    [status] => Selesai
+    [file_sk] => SK_1743518249_67ebfa29a72b7.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-01 21:37:29] Exception: Error saving pensiun data: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'jenis_pensiun' in 'field list'
+[2025-04-01 21:39:54] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => BUP
+    [status] => Selesai
+)
+
+[2025-04-01 21:39:54] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => Rival_Biasrori_-_CV.pdf
+            [full_path] => Rival_Biasrori_-_CV.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\php2430.tmp
+            [error] => 0
+            [size] => 33393
+        )
+
+)
+
+[2025-04-01 21:39:54] NIP dari POST: 199604212024211017
+[2025-04-01 21:39:54] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743518394_67ebfaba0da3e.pdf
+[2025-04-01 21:39:54] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => BUP
+    [status] => Selesai
+    [file_sk] => SK_1743518394_67ebfaba0da3e.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-01 21:39:54] Exception: Jenis pensiun harus diisi
+[2025-04-01 21:46:41] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => BUP
+    [status] => Selesai
+)
+
+[2025-04-01 21:46:41] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => Rival_Biasrori_-_CV.pdf
+            [full_path] => Rival_Biasrori_-_CV.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\php5B70.tmp
+            [error] => 0
+            [size] => 33393
+        )
+
+)
+
+[2025-04-01 21:46:41] NIP dari POST: 199604212024211017
+[2025-04-01 21:46:41] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743518801_67ebfc5160fdd.pdf
+[2025-04-01 21:46:41] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => BUP
+    [status] => Selesai
+    [file_sk] => SK_1743518801_67ebfc5160fdd.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-01 21:46:41] Exception: Jenis pensiun harus diisi
+[2025-04-01 21:46:58] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 1
+    [status] => Selesai
+)
+
+[2025-04-01 21:46:58] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 26-Program-Studi-Teknik-Informatika.pdf
+            [full_path] => 26-Program-Studi-Teknik-Informatika.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\php9E46.tmp
+            [error] => 0
+            [size] => 538969
+        )
+
+)
+
+[2025-04-01 21:46:58] NIP dari POST: 199604212024211017
+[2025-04-01 21:46:58] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743518818_67ebfc627c2bd.pdf
+[2025-04-01 21:46:58] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 1
+    [status] => Selesai
+    [file_sk] => SK_1743518818_67ebfc627c2bd.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-01 21:46:58] Exception: Jenis pensiun harus diisi
+[2025-04-01 22:05:51] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 1
+    [status] => Selesai
+)
+
+[2025-04-01 22:05:51] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => PG_RAMA.pdf
+            [full_path] => PG_RAMA.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\phpE754.tmp
+            [error] => 0
+            [size] => 631323
+        )
+
+)
+
+[2025-04-01 22:05:51] NIP dari POST: 199604212024211017
+[2025-04-01 22:05:51] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743519951_67ec00cf55e64.pdf
+[2025-04-01 22:05:51] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 1
+    [status] => Selesai
+    [file_sk] => SK_1743519951_67ec00cf55e64.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-01 22:05:51] Exception: Jenis pensiun harus diisi
+[2025-04-01 22:19:27] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 1
+    [status] => Selesai
+)
+
+[2025-04-01 22:19:27] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => PG_RAMA.pdf
+            [full_path] => PG_RAMA.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\php5CE8.tmp
+            [error] => 0
+            [size] => 631323
+        )
+
+)
+
+[2025-04-01 22:19:27] NIP dari POST: 199604212024211017
+[2025-04-01 22:19:27] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743520767_67ec03ffd13ef.pdf
+[2025-04-01 22:19:27] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 1
+    [status] => Selesai
+    [file_sk] => SK_1743520767_67ec03ffd13ef.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-01 22:19:27] Exception: Jenis pensiun harus diisi
+[2025-04-01 22:27:38] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Selesai
+)
+
+[2025-04-01 22:27:38] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => Website_Testing_Proposal.pdf
+            [full_path] => Website_Testing_Proposal.pdf
+            [type] => application/pdf
+            [tmp_name] => C:\Users\Rival\AppData\Local\Temp\phpDB10.tmp
+            [error] => 0
+            [size] => 2589
+        )
+
+)
+
+[2025-04-01 22:27:38] NIP dari POST: 199604212024211017
+[2025-04-01 22:27:38] Upload path: C:\Users\Rival\Documents\code\pensiun_app\config/../uploads/SK_1743521258_67ec05eadbf8d.pdf
+[2025-04-01 22:27:38] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Selesai
+    [file_sk] => SK_1743521258_67ec05eadbf8d.pdf
+    [nip] => 199604212024211017
+)
+
+[2025-04-01 22:27:38] Exception: Jenis pensiun harus diisi
+[2025-04-02 11:48:41] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Diproses
+)
+
+[2025-04-02 11:48:41] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-02 11:48:41] NIP dari POST: 199604212024211017
+[2025-04-02 11:48:41] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Diproses
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-02 11:48:41] Exception: Jenis pensiun harus diisi

@@ -71,8 +71,18 @@
                     <span class="text-xl font-semibold"><?= APP_NAME ?></span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="<?= BASE_URL ?>" class="hover:text-secondary transition-colors <?= strpos($_SERVER['REQUEST_URI'], 'index.php') !== false || $_SERVER['REQUEST_URI'] == BASE_URL ? 'text-secondary' : '' ?>">Beranda</a>
-                    <a href="<?= BASE_URL ?>/pages/pegawai.php" class="hover:text-secondary transition-colors <?= strpos($_SERVER['REQUEST_URI'], 'pegawai.php') !== false ? 'text-secondary' : '' ?>">Data Pegawai</a>
+                    <a href="<?= BASE_URL ?>" class="flex items-center px-3 py-2 rounded-md hover:bg-primary-light transition-all <?= strpos($_SERVER['REQUEST_URI'], 'index.php') !== false || $_SERVER['REQUEST_URI'] == BASE_URL ? 'bg-white/10 text-white font-medium' : '' ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                        </svg>
+                        Beranda
+                    </a>
+                    <a href="<?= BASE_URL ?>/pages/pegawai.php" class="flex items-center px-3 py-2 rounded-md hover:bg-primary-light transition-all <?= strpos($_SERVER['REQUEST_URI'], 'pegawai.php') !== false ? 'bg-white/10 text-white font-medium' : '' ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                        </svg>
+                        Data Pegawai
+                    </a>
                 </div>
             </div>
         </div>
