@@ -1,4 +1,9 @@
 <?php
+// fungsi untuk base url global
+function base_url($path = '')
+{
+    return rtrim(BASE_URL, '/') . '/' . ltrim($path, '/');
+}
 
 // Format tanggal ke format Indonesia
 function formatTanggal($date) {

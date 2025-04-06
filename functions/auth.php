@@ -1,17 +1,17 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
-class Auth {
+class Auth
+{
     private $conn;
     private $table = 'users';
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function login($username, $password) {
+    public function login($username, $password)
+    {
         $query = "SELECT * FROM " . $this->table . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
@@ -28,56 +28,61 @@ class Auth {
         return false;
     }
 
-    public function isLoggedIn() {
+    public function isLoggedIn()
+    {
         return isset($_SESSION['user_id']);
     }
 
-    public function isAdmin() {
-        return $this->isLoggedIn();
+    public function isAdmin()
+    {
+        return $this->isLoggedIn(); // Update sesuai role jika dibutuhkan
     }
 
-    public function logout() {
+    public function logout()
+    {
+        session_unset();
         session_destroy();
-        session_start();
+        header('Location: ' . BASE_URL . '/login.php');
+        exit;
     }
 
-    public function generateCSRFToken() {
+    public function generateCSRFToken()
+    {
         if (!isset($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
         return $_SESSION['csrf_token'];
     }
 
-    public function validateCSRFToken($token) {
-        if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
-            return false;
-        }
-        return true;
+    public function validateCSRFToken($token)
+    {
+        return isset($_SESSION['csrf_token']) && $token === $_SESSION['csrf_token'];
     }
 
-    public function checkAuth() {
-        if (!$this->isLoggedIn()) {
-            header('Location: ' . BASE_URL . '/login.php');
-            exit;
-        }
-        return true;
-    }
-
-    public function requireLogin() {
-        return $this->checkAuth();
-    }
-
-    public function requireAdmin() {
+    public function checkAuth()
+    {
         if (!$this->isLoggedIn()) {
             header('Location: ' . BASE_URL . '/login.php');
             exit;
         }
     }
 
-    public static function sanitizeInput($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
+    public function requireLogin()
+    {
+        $this->checkAuth();
+    }
+
+    public function requireAdmin()
+    {
+        if (!$this->isLoggedIn()) {
+            header('Location: ' . BASE_URL . '/login.php');
+            exit;
+        }
+        // Tambah pengecekan role admin jika perlu
+    }
+
+    public static function sanitizeInput($data)
+    {
+        return htmlspecialchars(stripslashes(trim($data)));
     }
 }

@@ -3,9 +3,6 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../functions/auth.php';
 require_once __DIR__ . '/../functions/logic.php';
-include __DIR__ . '/../components/header.php';
-include __DIR__ . '/../components/toast.php';
-
 
 $database = new Database();
 $conn = $database->getConnection();
@@ -14,6 +11,7 @@ $auth->checkAuth();
 
 $pensiunManager = new PensiunManager();
 $summary = $pensiunManager->getSummary();
+include_once __DIR__. '/../components/header.php';
 ?>
 
 
@@ -108,8 +106,8 @@ $summary = $pensiunManager->getSummary();
 </div>
 
 <!-- Modal Form -->
-<div id="formModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full sm:h-auto w-full backdrop-blur-sm transition-all duration-300">
-    <div class="relative top-20 mx-auto p-5 w-[95%] sm:w-[90%] md:w-[80%] lg:w-[60%] xl:w-[40%] max-w-3xl border shadow-lg rounded-lg bg-white transform transition-all duration-300 scale-95 opacity-0">
+<div id="formModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full backdrop-blur-sm transition-all duration-300">
+    <div class="relative top-20 mx-auto p-5 border w-full max-w-xl shadow-lg rounded-lg bg-white transform transition-all duration-300 scale-95 opacity-0">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-semibold text-gray-800" id="modalTitle">Tambah Data Pensiun</h3>
             <button onclick="closeModal()" class="text-gray-600 hover:text-gray-800">
@@ -216,8 +214,6 @@ $summary = $pensiunManager->getSummary();
     </div>
 </div>
 
-<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-
 <script>
     let dataTable;
     let pollingInterval;
@@ -243,7 +239,6 @@ $summary = $pensiunManager->getSummary();
         dataTable = $('#pensiunTable').DataTable({
             processing: true,
             serverSide: true,
-            responsive: true,
             ajax: {
                 url: '<?= BASE_URL ?>/api/pensiun-list.php',
                 type: 'POST',
