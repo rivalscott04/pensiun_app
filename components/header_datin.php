@@ -72,7 +72,7 @@ function nav_link($href, $label, $match, $icon = 'default')
                 </div>
                 <div class="hidden md:flex flex-wrap gap-2 items-center justify-end">
                     <?= nav_link('/kanwil_informasi.php', 'Dashboard', 'kanwil_informasi.php', 'dashboard') ?>
-                    <?= nav_link('/', 'Data Pensiun', 'index.php') ?>
+                    <?= nav_link('/pages/index.php', 'Data Pensiun', 'index.php') ?>
                     <?= nav_link('/pages/pegawai.php', 'Data Pegawai', 'pegawai.php') ?>
                     <?= nav_link('/pages/peta_interaktif.php', 'Sebaran Pegawai', 'peta_interaktif.php', 'map') ?>
                 </div>
