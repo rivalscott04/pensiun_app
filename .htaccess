@@ -1,4 +1,4 @@
-ErrorDocument 404 /404.php
+ErrorDocument 404 /pensiun_app/404.php
 RewriteEngine On
 RewriteBase /pensiun_app/
 
@@ -6,12 +6,12 @@ RewriteBase /pensiun_app/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} \.php$
-RewriteRule .* /pensiun_app/404.php [L]
+RewriteRule ^(.*)$ /pensiun_app/404.php [L,R=404]
 
 # Handle all other non-existent files/directories
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule .* /pensiun_app/404.php [L]
+RewriteRule ^(.*)$ /pensiun_app/404.php [L,R=404]
 
 # Prevent directory listing
 Options -Indexes
