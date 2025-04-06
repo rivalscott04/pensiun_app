@@ -3,13 +3,13 @@
     <h1 class="text-2xl font-bold text-primary mb-6">Peta Interaktif Pegawai per Kabupaten/Kota</h1>
 
     <div class="bg-white rounded-lg shadow-md p-4 border border-gray-200 relative">
-        <!-- Map -->
+        <!-- Peta -->
         <div id="map" class="w-full h-[500px] rounded transition duration-300"></div>
 
-        <!-- Spinner overlay -->
-        <div id="loading" class="absolute inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-sm bg-white/10">
+        <!-- Spinner + blur -->
+        <div id="loading" class="absolute inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-md bg-transparent text-primary">
             <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin mb-3"></div>
-            <p class="text-sm text-gray-700 font-medium">Memuat data pegawai...</p>
+            <p class="text-sm font-medium">Memuat data peta dan pegawai...</p>
         </div>
     </div>
 </main>
@@ -18,14 +18,14 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
 
-<!-- Tailwind CDN (pastikan bisa diakses di lokal atau ganti ke lokal JS jika perlu) -->
+<!-- Tailwind CSS (CDN atau ganti ke lokal jika perlu) -->
 <script src="/assets/js/tailwind.min.js"></script>
 <script>
     tailwind.config = {
         theme: {
             extend: {
                 colors: {
-                    primary: '#5B21B6' // Warna ungu custom
+                    primary: '#5B21B6' // Warna ungu khas NTB
                 }
             }
         }
@@ -83,7 +83,6 @@
             console.error('Gagal memuat data pegawai:', error);
             alert('Terjadi kesalahan saat memuat data pegawai.');
         } finally {
-            // Hilangkan loading spinner
             document.getElementById('loading').classList.add('hidden');
         }
     });
