@@ -3,6 +3,9 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../functions/auth.php';
 require_once __DIR__ . '/../functions/logic.php';
+include __DIR__ . '/../components/header.php';
+include __DIR__ . '/../components/toast.php';
+
 
 $database = new Database();
 $conn = $database->getConnection();
@@ -11,9 +14,8 @@ $auth->checkAuth();
 
 $pensiunManager = new PensiunManager();
 $summary = $pensiunManager->getSummary();
-
-include __DIR__ . '/../components/header.php';
 ?>
+
 
 <!-- Summary Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
@@ -92,8 +94,8 @@ include __DIR__ . '/../components/header.php';
     <table id="pensiunTable" class="w-full">
         <thead>
             <tr>
-                <th>Nama</th>
                 <th>NIP</th>
+                <th>Nama</th>
                 <th>TMT Pensiun</th>
                 <th>Jenis Pensiun</th>
                 <th>Tempat Tugas</th>
@@ -106,8 +108,8 @@ include __DIR__ . '/../components/header.php';
 </div>
 
 <!-- Modal Form -->
-<div id="formModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full backdrop-blur-sm transition-all duration-300">
-    <div class="relative top-20 mx-auto p-5 border w-full max-w-xl shadow-lg rounded-lg bg-white transform transition-all duration-300 scale-95 opacity-0">
+<div id="formModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full sm:h-auto w-full backdrop-blur-sm transition-all duration-300">
+    <div class="relative top-20 mx-auto p-5 w-[95%] sm:w-[90%] md:w-[80%] lg:w-[60%] xl:w-[40%] max-w-3xl border shadow-lg rounded-lg bg-white transform transition-all duration-300 scale-95 opacity-0">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-semibold text-gray-800" id="modalTitle">Tambah Data Pensiun</h3>
             <button onclick="closeModal()" class="text-gray-600 hover:text-gray-800">
@@ -206,13 +208,15 @@ include __DIR__ . '/../components/header.php';
                 <button type="button" onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
                     Batal
                 </button>
-                <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md text-sm font-medium hover:bg-primary/90">
+                <button id="submitBtn" type="submit" class="px-4 py-2 bg-primary text-white rounded-md text-sm font-medium hover:bg-primary/90">
                     Simpan
                 </button>
             </div>
         </form>
     </div>
 </div>
+
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
 
 <script>
     let dataTable;
@@ -239,6 +243,7 @@ include __DIR__ . '/../components/header.php';
         dataTable = $('#pensiunTable').DataTable({
             processing: true,
             serverSide: true,
+            responsive: true,
             ajax: {
                 url: '<?= BASE_URL ?>/api/pensiun-list.php',
                 type: 'POST',
@@ -258,10 +263,10 @@ include __DIR__ . '/../components/header.php';
                 }
             },
             columns: [{
-                    data: 'nama'
+                    data: 'nip'
                 },
                 {
-                    data: 'nip'
+                    data: 'nama'
                 },
                 {
                     data: 'tmt_pensiun',
@@ -479,40 +484,54 @@ include __DIR__ . '/../components/header.php';
     function savePensiun(event) {
         event.preventDefault();
 
-        if (!validateForm()) {
-            return;
-        }
+        if (!validateForm()) return;
 
-        const formData = new FormData($('#pensiunForm')[0]);
-        // Show loading state
-        const submitBtn = $(event.target).find('button[type="submit"]');
-        const originalText = submitBtn.html();
-        submitBtn.html('<svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Menyimpan...').prop('disabled', true);
+        Swal.fire({
+            title: 'Simpan Data?',
+            text: 'Apakah Anda yakin ingin menyimpan data ini?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, simpan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (!result.isConfirmed) return;
 
-        $.ajax({
-            url: '<?= BASE_URL ?>/api/pensiun-save.php',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                if (response.status) {
-                    showToast(response.message, 'success');
-                    closeModal();
-                    reloadData();
-                } else {
-                    showToast(response.message, 'error');
+            const formData = new FormData($('#pensiunForm')[0]);
+            const submitBtn = $('#submitBtn');
+            const originalText = submitBtn.html();
+
+            submitBtn.html(`
+            <svg class="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.4 0 0 5.4 0 12h4zm2 5.3A8 8 0 014 12H0c0 3.04 1.1 5.8 2.9 7.9l3.1-2.6z"/>
+            </svg> Menyimpan...`).prop('disabled', true);
+
+            $.ajax({
+                url: '<?= BASE_URL ?>/api/pensiun-save.php',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.status) {
+                        showToast(response.message, 'success');
+                        closeModal();
+                        reloadData();
+                    } else {
+                        showToast(response.message || 'Gagal menyimpan data.', 'error');
+                    }
+                },
+                error: function() {
+                    showToast('Terjadi kesalahan sistem saat menyimpan.', 'error');
+                },
+                complete: function() {
+                    submitBtn.html(originalText).prop('disabled', false);
                 }
-            },
-            error: function() {
-                showToast('Terjadi kesalahan sistem', 'error');
-            },
-            complete: function() {
-                // Restore button state
-                submitBtn.html(originalText).prop('disabled', false);
-            }
+            });
         });
     }
+
 
     // Edit pensiun
     function editPensiun(id) {
@@ -576,6 +595,34 @@ include __DIR__ . '/../components/header.php';
                 });
             }
         });
+    }
+
+    function showToast(message, type = 'success') {
+        const toastContainer = document.getElementById('toast-container') || createToastContainer();
+
+        const colors = {
+            success: 'bg-green-500',
+            error: 'bg-red-500',
+            warning: 'bg-yellow-500'
+        };
+
+        const toast = document.createElement('div');
+        toast.className = `text-white px-4 py-2 rounded shadow-md mb-2 ${colors[type] || 'bg-gray-800'}`;
+        toast.innerText = message;
+
+        toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 4000);
+    }
+
+    function createToastContainer() {
+        const container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'fixed top-4 right-4 z-50 flex flex-col items-end';
+        document.body.appendChild(container);
+        return container;
     }
 
     // Polling function

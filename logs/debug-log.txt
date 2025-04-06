@@ -744,3 +744,213 @@
 (
 )
 
+[2025-04-06 20:17:26] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Menunggu
+)
+
+[2025-04-06 20:17:26] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-06 20:17:26] NIP dari POST: 199604212024211017
+[2025-04-06 20:17:26] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Menunggu
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-06 20:23:03] POST data: Array
+(
+    [delete] => true
+    [id] => 8
+)
+
+[2025-04-06 20:23:03] FILES data: Array
+(
+)
+
+[2025-04-06 20:25:00] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 1
+    [status] => Menunggu
+)
+
+[2025-04-06 20:25:00] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-06 20:25:00] NIP dari POST: 199604212024211017
+[2025-04-06 20:25:00] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 1
+    [status] => Menunggu
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-06 20:27:38] POST data: Array
+(
+    [delete] => true
+    [id] => 9
+)
+
+[2025-04-06 20:27:38] FILES data: Array
+(
+)
+
+[2025-04-06 20:27:48] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 3
+    [status] => Menunggu
+)
+
+[2025-04-06 20:27:48] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-06 20:27:48] NIP dari POST: 199604212024211017
+[2025-04-06 20:27:48] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 3
+    [status] => Menunggu
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-06 21:17:12] POST data: Array
+(
+    [delete] => true
+    [id] => 10
+)
+
+[2025-04-06 21:17:12] FILES data: Array
+(
+)
+
+[2025-04-06 21:19:56] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 3
+    [status] => Menunggu
+)
+
+[2025-04-06 21:19:56] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-06 21:19:56] NIP dari POST: 199604212024211017
+[2025-04-06 21:19:56] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 3
+    [status] => Menunggu
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
+[2025-04-06 21:32:52] POST data: Array
+(
+    [delete] => true
+    [id] => 11
+)
+
+[2025-04-06 21:32:52] FILES data: Array
+(
+)
+
+[2025-04-06 21:33:11] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 3
+    [status] => Menunggu
+)
+
+[2025-04-06 21:33:11] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-06 21:33:11] NIP dari POST: 199604212024211017
+[2025-04-06 21:33:11] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 3
+    [status] => Menunggu
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+
