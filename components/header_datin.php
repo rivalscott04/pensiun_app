@@ -24,7 +24,7 @@ function nav_link($href, $label, $match, $icon = 'default')
     <title><?= APP_NAME ?></title>
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/assets/js/tailwind.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
