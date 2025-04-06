@@ -2,13 +2,21 @@ ErrorDocument 404 /pensiun_app/404.php
 RewriteEngine On
 RewriteBase /pensiun_app/
 
-# Handle invalid PHP files first
+# Redirect .php URLs to clean URLs (SEO friendly)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+pensiun_app/([^\s/]+)\.php [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# Rewrite /file → /file.php if file exists
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+
+# Handle invalid PHP files
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} \.php$
 RewriteRule ^(.*)$ /pensiun_app/404.php [L,R=404]
 
-# Handle all other non-existent files/directories
+# Handle other invalid requests
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /pensiun_app/404.php [L,R=404]
