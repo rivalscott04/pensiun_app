@@ -8,5 +8,5 @@ $conn = $database->getConnection();
 $auth = new Auth($conn);
 
 $auth->logout();
-header('Location: ' . BASE_URL . '/login.php');
+header('Location: ' . BASE_URL . '/kanwil_informasi.php');
 exit;

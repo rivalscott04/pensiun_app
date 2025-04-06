@@ -41,7 +41,7 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
- <!-- Alpine.js -->
+    <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Custom Styles -->
@@ -80,7 +80,7 @@
                     <span class="text-xl font-semibold"><?= APP_NAME ?></span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="<?= BASE_URL ?>" class="flex items-center px-3 py-2 rounded-md hover:bg-primary-light transition-all <?= strpos($_SERVER['REQUEST_URI'], 'index.php') !== false || $_SERVER['REQUEST_URI'] == BASE_URL ? 'bg-white/10 text-white font-medium' : '' ?>">
+                    <a href="<?= BASE_URL ?>/pages/index.php" class="flex items-center px-3 py-2 rounded-md hover:bg-primary-light transition-all <?= strpos($_SERVER['REQUEST_URI'], 'index.php') !== false || $_SERVER['REQUEST_URI'] == BASE_URL ? 'bg-white/10 text-white font-medium' : '' ?>">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                         </svg>

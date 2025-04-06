@@ -9,7 +9,7 @@ $auth = new Auth($conn);
 
 // Redirect if already logged in
 if ($auth->isLoggedIn()) {
-    header('Location: ' . BASE_URL);
+    header('Location: ' . BASE_URL . 'pages/index.php');
     exit;
 }
 
@@ -17,9 +17,9 @@ if ($auth->isLoggedIn()) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = isset($_POST['username']) ? Auth::sanitizeInput($_POST['username']) : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
-    
+
     if ($auth->login($username, $password)) {
-        header('Location: ' . BASE_URL);
+        header('Location: ' . BASE_URL . 'pages/index.php');
         exit;
     } else {
         $error = 'Username atau password salah';
@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,13 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
 </head>
+
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="flex w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Left Side: Illustration -->
         <div class="w-1/2 bg-primary flex items-center justify-center">
-            <img src="https://cdni.iconscout.com/illustration/premium/thumb/application-login-4438907-3726717.png" 
-                 alt="Ilustrasi Login" 
-                 class="w-full h-auto object-cover" />
+            <img src="https://cdni.iconscout.com/illustration/premium/thumb/application-login-4438907-3726717.png"
+                alt="Ilustrasi Login"
+                class="w-full h-auto object-cover" />
         </div>
 
         <!-- Right Side: Login Form -->
@@ -67,32 +69,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Username -->
                 <div class="mb-4">
                     <label for="username" class="block text-sm font-medium text-gray-600">Username</label>
-                    <input type="text" 
-                           id="username" 
-                           name="username" 
-                           placeholder="Masukkan username" 
-                           class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition duration-300 ease-in-out" 
-                           required>
+                    <input type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Masukkan username"
+                        class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition duration-300 ease-in-out"
+                        required>
                 </div>
 
                 <!-- Password -->
                 <div class="mb-6">
                     <label for="password" class="block text-sm font-medium text-gray-600">Kata Sandi</label>
-                    <input type="password" 
-                           id="password" 
-                           name="password" 
-                           placeholder="Masukkan kata sandi" 
-                           class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition duration-300 ease-in-out" 
-                           required>
+                    <input type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Masukkan kata sandi"
+                        class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition duration-300 ease-in-out"
+                        required>
                 </div>
 
                 <!-- Login Button -->
-                <button type="submit" 
-                        class="w-full py-2 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition duration-300 ease-in-out">
+                <button type="submit"
+                    class="w-full py-2 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition duration-300 ease-in-out">
                     Masuk
                 </button>
             </form>
         </div>
     </div>
 </body>
+
 </html>
