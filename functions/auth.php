@@ -42,7 +42,7 @@ class Auth
     {
         session_unset();
         session_destroy();
-        header('Location: ' . BASE_URL . '/login.php');
+        header('Location: ' . BASE_URL . 'kanwil_informasi.php');
         exit;
     }
 
@@ -62,7 +62,7 @@ class Auth
     public function checkAuth()
     {
         if (!$this->isLoggedIn()) {
-            header('Location: ' . BASE_URL . '/login.php');
+            header('Location: ' . BASE_URL . 'login.php');
             exit;
         }
     }
@@ -75,7 +75,7 @@ class Auth
     public function requireAdmin()
     {
         if (!$this->isLoggedIn()) {
-            header('Location: ' . BASE_URL . '/login.php');
+            header('Location: ' . BASE_URL . 'login.php');
             exit;
         }
         // Tambah pengecekan role admin jika perlu
