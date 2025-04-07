@@ -317,6 +317,7 @@ include __DIR__ . '/../components/header.php';
         $('#pegawaiTable').DataTable({
             processing: true,
             serverSide: true,
+            responsive: true,
             ajax: {
                 url: '../api/pegawai-list.php',
                 type: 'POST'

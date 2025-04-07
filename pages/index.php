@@ -239,6 +239,7 @@ include_once __DIR__. '/../components/header.php';
         dataTable = $('#pensiunTable').DataTable({
             processing: true,
             serverSide: true,
+            responsive: true,
             ajax: {
                 url: '<?= BASE_URL ?>/api/pensiun-list.php',
                 type: 'POST',
