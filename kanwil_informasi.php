@@ -55,6 +55,17 @@ require_once __DIR__ . '/components/ui/accordion.php';
         );
 
         echo accordion_item(
+            'Distribusi Usia Pegawai',
+            '<div class="bg-white rounded-lg p-4">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Distribusi Pegawai Berdasarkan Rentang Usia</h2>
+            <div id="usiaChart" class="w-full h-[400px]"></div>
+        </div>',
+            'usia'
+        );
+
+
+
+        echo accordion_item(
             'Tren Pensiun Pegawai per Tahun',
             '<div class="bg-white rounded-lg p-4">
             <h2 class="text-lg font-semibold text-gray-800 mb-4">Tren Pensiun Pegawai per Tahun</h2>
@@ -95,6 +106,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const pensiunRes = await fetch('/api/get_pensiun_per_tahun.php');
     const pensiunData = await pensiunRes.json();
 
+    const usiaRes = await fetch('/api/get_distribusi_usia.php');
+    const usiaData = await usiaRes.json();
+
+
+
     const filterJabatan = document.getElementById('filterJabatan');
     const filterGolongan = document.getElementById('filterGolongan');
 
@@ -110,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         filterGolongan.appendChild(opt2);
     });
 
-    let jabatanChart, golonganChart, statusChart, unitKerjaChart, pensiunTrendChart;
+    let jabatanChart, golonganChart, statusChart, unitKerjaChart, pensiunTrendChart, usiaChart;
 
     function renderJabatanChart(selectedUnit = '') {
         if (jabatanChart) jabatanChart.destroy();
@@ -218,6 +234,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         unitKerjaChart.render();
     }
 
+    function renderUsiaChart() {
+        if (usiaChart) usiaChart.destroy();
+        usiaChart = new ApexCharts(document.querySelector("#usiaChart"), {
+            chart: {
+                type: 'pie',
+                height: 400
+            },
+            labels: usiaData.map(d => d.rentang_usia),
+            series: usiaData.map(d => d.jumlah),
+            colors: ['#4CAF50', '#2196F3', '#FFC107', '#F44336']
+        });
+        usiaChart.render();
+    }
+
+
+
     function renderPensiunTrendChart() {
         if (pensiunTrendChart) pensiunTrendChart.destroy();
         pensiunTrendChart = new ApexCharts(document.querySelector("#pensiunTrendChart"), {
@@ -232,10 +264,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             xaxis: {
                 categories: pensiunData.map(d => d.tahun)
             },
-            colors: ['#2A9D8F'],
-            stroke: {
-                curve: 'smooth'
-            }
+            colors: ['#E63946']
         });
         pensiunTrendChart.render();
     }
@@ -244,6 +273,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderGolonganChart();
     renderStatusChart();
     renderUnitKerjaChart();
+    renderUsiaChart();
+
     renderPensiunTrendChart();
 
     filterJabatan.addEventListener('change', () => {
