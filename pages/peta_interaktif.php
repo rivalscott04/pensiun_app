@@ -129,7 +129,7 @@ require_once __DIR__ . '/../components/ui/card.php';
             if (localStorage.getItem('pegawaiData')) {
                 pegawaiData = JSON.parse(localStorage.getItem('pegawaiData'));
             } else {
-                const res = await fetch('/api/get_pegawai_kabupaten.php');
+                const res = await fetch('https://sdm.rivaldev.site/api/get_pegawai_kabupaten.php');
                 pegawaiData = await res.json();
                 localStorage.setItem('pegawaiData', JSON.stringify(pegawaiData));
             }
