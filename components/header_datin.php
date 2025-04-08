@@ -53,8 +53,6 @@ function nav_link($href, $label, $match, $icon = 'default')
 </head>
 
 <body class="bg-gray-50">
-    <?php include __DIR__ . '/toast.php'; ?>
-
     <!-- NAVBAR -->
     <nav class="bg-primary text-white shadow-md" x-data="{ open: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
