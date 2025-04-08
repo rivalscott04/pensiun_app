@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../components/header_datin.php';
 require_once __DIR__ . '/../components/ui/card.php';
 ?>
