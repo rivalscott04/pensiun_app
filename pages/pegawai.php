@@ -264,7 +264,7 @@ include __DIR__ . '/../components/header.php';
     }
 
     // Inisialisasi WebSocket untuk realtime updates
-    const ws = new WebSocket('ws://' + window.location.hostname + ':8080');
+    const ws = new WebSocket('ws://' + window.location.hostname);
     ws.onmessage = function(event) {
         const data = JSON.parse(event.data);
         if (data.type === 'pegawai_update') {
