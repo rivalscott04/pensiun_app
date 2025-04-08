@@ -964,3 +964,57 @@
 (
 )
 
+[2025-04-08 15:04:07] POST data: Array
+(
+    [delete] => true
+    [id] => 14
+)
+
+[2025-04-08 15:04:07] FILES data: Array
+(
+)
+
+[2025-04-08 15:24:03] POST data: Array
+(
+    [delete] => true
+    [id] => 13
+)
+
+[2025-04-08 15:24:03] FILES data: Array
+(
+)
+
+[2025-04-08 15:24:16] POST data: Array
+(
+    [nip] => 199604212024211017
+    [nama] => RIVAL BI'ASRORI S.Kom
+    [induk_unit] => Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat
+    [unit_kerja] => Bagian Tata Usaha
+    [tmt_pensiun] => 2054-05-01
+    [jenis_pensiun] => 2
+    [status] => Diproses
+)
+
+[2025-04-08 15:24:16] FILES data: Array
+(
+    [file_sk] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+[2025-04-08 15:24:16] NIP dari POST: 199604212024211017
+[2025-04-08 15:24:16] Data yang akan disimpan: Array
+(
+    [jenis_pensiun_id] => 2
+    [status] => Diproses
+    [file_sk] => 
+    [nip] => 199604212024211017
+)
+

@@ -14,96 +14,116 @@ $summary = $pensiunManager->getSummary();
 include_once __DIR__ . '/../components/header.php';
 ?>
 
+<div class="w-full max-w-7xl mx-auto px-4 pt-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
 
-<!-- Summary Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-primary border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
-        <div class="mr-4 text-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
-            </svg>
+        <!-- Total Data -->
+        <div class="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition duration-300">
+            <div>
+                <h4 class="text-sm text-gray-500 mb-1">Total Data</h4>
+                <p class="text-2xl font-bold text-gray-900" data-summary="total"><?= $summary['total'] ?></p>
+            </div>
+            <div class="bg-blue-700 text-white p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 4H7a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z" />
+                </svg>
+            </div>
         </div>
-        <div>
-            <h3 class="text-gray-500 text-sm font-medium">Total Data</h3>
-            <p class="text-2xl font-semibold text-primary" data-summary="total"><?= $summary['total'] ?></p>
+
+        <!-- Selesai -->
+        <div class="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition duration-300">
+            <div>
+                <h4 class="text-sm text-gray-500 mb-1">Selesai</h4>
+                <p class="text-2xl font-bold text-green-600" data-summary="selesai"><?= $summary['selesai'] ?></p>
+            </div>
+            <div class="bg-green-600 text-white p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
         </div>
-    </div>
-    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-supporting-200 border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
-        <div class="mr-4 text-supporting-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-            </svg>
+
+        <!-- Diproses -->
+        <div class="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition duration-300">
+            <div>
+                <h4 class="text-sm text-gray-500 mb-1">Diproses</h4>
+                <p class="text-2xl font-bold text-sky-600" data-summary="diproses"><?= $summary['diproses'] ?></p>
+            </div>
+            <div class="bg-sky-600 text-white p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+                </svg>
+            </div>
         </div>
-        <div>
-            <h3 class="text-gray-500 text-sm font-medium">Selesai</h3>
-            <p class="text-2xl font-semibold text-supporting-200" data-summary="selesai"><?= $summary['selesai'] ?></p>
+
+        <!-- Menunggu -->
+        <div class="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition duration-300">
+            <div>
+                <h4 class="text-sm text-gray-500 mb-1">Menunggu</h4>
+                <p class="text-2xl font-bold text-yellow-500" data-summary="menunggu"><?= $summary['menunggu'] ?></p>
+            </div>
+            <div class="bg-yellow-400 text-white p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4h4" />
+                </svg>
+            </div>
         </div>
-    </div>
-    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-supporting-100 border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
-        <div class="mr-4 text-supporting-100">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-            </svg>
+
+        <!-- Ditolak -->
+        <div class="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition duration-300">
+            <div>
+                <h4 class="text-sm text-gray-500 mb-1">Ditolak</h4>
+                <p class="text-2xl font-bold text-red-600" data-summary="ditolak"><?= $summary['ditolak'] ?></p>
+            </div>
+            <div class="bg-red-500 text-white p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
         </div>
-        <div>
-            <h3 class="text-gray-500 text-sm font-medium">Diproses</h3>
-            <p class="text-2xl font-semibold text-supporting-100" data-summary="diproses"><?= $summary['diproses'] ?></p>
-        </div>
-    </div>
-    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-secondary border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
-        <div class="mr-4 text-secondary">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-            </svg>
-        </div>
-        <div>
-            <h3 class="text-gray-500 text-sm font-medium">Menunggu</h3>
-            <p class="text-2xl font-semibold text-secondary" data-summary="menunggu"><?= $summary['menunggu'] ?></p>
-        </div>
-    </div>
-    <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-l-supporting-300 border-t border-r border-b border-gray-200 hover:shadow-xl transition-all duration-300 flex items-center">
-        <div class="mr-4 text-supporting-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-            </svg>
-        </div>
-        <div>
-            <h3 class="text-gray-500 text-sm font-medium">Ditolak</h3>
-            <p class="text-2xl font-semibold text-supporting-300" data-summary="ditolak"><?= $summary['ditolak'] ?></p>
-        </div>
+
     </div>
 </div>
+
+
 
 <!-- DataTable Section -->
-<div class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow duration-300">
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-semibold text-gray-800">Data Pensiun</h2>
-        <div class="flex space-x-2">
-            <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                </svg>
-                Tambah Data
-            </button>
-        </div>
+<!-- DataTable Section -->
+<div class="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-gray-900">Data Pensiun</h2>
+        <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+            Tambah Data
+        </button>
     </div>
 
-    <table id="pensiunTable" class="w-full">
-        <thead>
-            <tr>
-                <th>NIP</th>
-                <th>Nama</th>
-                <th>TMT Pensiun</th>
-                <th>Jenis Pensiun</th>
-                <th>Tempat Tugas</th>
-                <th>Status</th>
-                <th>File SK</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-    </table>
+    <div class="p-6">
+        <div class="overflow-x-auto">
+            <table id="pensiunTable" class="min-w-full table-auto text-sm text-gray-700">
+                <thead class="bg-gray-100 text-gray-600">
+                    <tr>
+                        <th class="px-4 py-2 border-b font-medium text-left">NIP</th>
+                        <th class="px-4 py-2 border-b font-medium text-left">Nama</th>
+                        <th class="px-4 py-2 border-b font-medium text-left">TMT Pensiun</th>
+                        <th class="px-4 py-2 border-b font-medium text-left">Jenis Pensiun</th>
+                        <th class="px-4 py-2 border-b font-medium text-left">Tempat Tugas</th>
+                        <th class="px-4 py-2 border-b font-medium text-left">Status</th>
+                        <th class="px-4 py-2 border-b font-medium text-left">File SK</th>
+                        <th class="px-4 py-2 border-b font-medium text-left">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-800">
+                    <!-- Data will be dynamically loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+
 
 <!-- Modal Form -->
 <div id="formModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full backdrop-blur-sm transition-all duration-300">
@@ -288,6 +308,7 @@ include_once __DIR__ . '/../components/header.php';
                         return `<span class="px-2 py-1 rounded-full text-xs font-medium ${classes[data] || 'bg-gray-100 text-gray-800'}">${data}</span>`;
                     }
                 },
+
                 {
                     data: 'file_sk',
                     render: function(data) {
