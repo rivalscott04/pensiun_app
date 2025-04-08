@@ -182,7 +182,8 @@
 
 
         // Get summary of pegawai by kabupaten/kota
-        public function getPegawaiByKabupaten() {
+        public function getPegawaiByKabupaten()
+        {
             try {
                 // Insert data for missing locations if they don't exist
                 $missingLocations = [
@@ -196,7 +197,7 @@
                     $stmt = $this->conn->prepare($checkQuery);
                     $stmt->bindParam(':location', $location);
                     $stmt->execute();
-                    
+
                     if ($stmt->fetch()['count'] == 0) {
                         $timestamp = time();
                         $locationCode = substr(md5($location), 0, 4);
@@ -212,26 +213,39 @@
                 }
 
                 $query = "SELECT 
-                    CASE 
-                        WHEN induk_unit LIKE 'Kanwil Kementerian Agama%' THEN 'Kanwil Kementerian Agama NTB'
-                        WHEN induk_unit LIKE 'Kantor Kementerian Agama%' THEN 
-                            REPLACE(
-                                REPLACE(induk_unit, 'Kantor Kementerian Agama ', ''),
-                                'Provinsi Nusa Tenggara Barat',
-                                ''
-                            )
-                    END as induk_unit,
-                    COUNT(*) as total 
-                    FROM pegawai 
-                    WHERE induk_unit LIKE 'Kantor Kementerian Agama%' 
-                    OR induk_unit LIKE 'Kanwil Kementerian Agama%'
-                    GROUP BY induk_unit 
-                    ORDER BY 
-                    CASE 
-                        WHEN induk_unit LIKE 'Kanwil%' THEN 1 
-                        ELSE 2 
-                    END, 
-                    induk_unit ASC";
+            induk_unit,
+            CASE 
+                WHEN induk_unit LIKE '%Kota Mataram%' THEN 'Kota Mataram'
+                WHEN induk_unit LIKE '%Kota Bima%' THEN 'Kota Bima'
+                WHEN induk_unit LIKE '%Kabupaten Bima%' THEN 'Kabupaten Bima'
+                WHEN induk_unit LIKE '%Kabupaten Sumbawa Barat%' THEN 'Kabupaten Sumbawa Barat'
+                WHEN induk_unit LIKE '%Kabupaten Sumbawa%' THEN 'Kabupaten Sumbawa'
+                WHEN induk_unit LIKE '%Kabupaten Lombok Utara%' THEN 'Kabupaten Lombok Utara'
+                WHEN induk_unit LIKE '%Kabupaten Lombok Timur%' THEN 'Kabupaten Lombok Timur'
+                WHEN induk_unit LIKE '%Kabupaten Lombok Tengah%' THEN 'Kabupaten Lombok Tengah'
+                WHEN induk_unit LIKE '%Kabupaten Lombok Barat%' THEN 'Kabupaten Lombok Barat'
+                WHEN induk_unit LIKE '%Kabupaten Dompu%' THEN 'Kabupaten Dompu'
+                WHEN induk_unit LIKE 'Kanwil%' THEN 'Kanwil Kementerian Agama NTB'
+                ELSE 'Lainnya'
+            END as nama_singkat,
+            COUNT(*) as total 
+        FROM pegawai 
+        WHERE induk_unit IS NOT NULL AND induk_unit != ''
+        GROUP BY nama_singkat
+        ORDER BY FIELD(nama_singkat,
+            'Kanwil Kementerian Agama NTB',
+            'Kota Mataram',
+            'Kabupaten Lombok Barat',
+            'Kabupaten Lombok Utara',
+            'Kabupaten Lombok Tengah',
+            'Kabupaten Lombok Timur',
+            'Kabupaten Sumbawa Barat',
+            'Kabupaten Sumbawa',
+            'Kabupaten Dompu',
+            'Kabupaten Bima',
+            'Kota Bima'
+        )";
+
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
                 return $stmt->fetchAll();
@@ -239,6 +253,7 @@
                 throw new Exception("Error getting pegawai summary by kabupaten: " . $e->getMessage());
             }
         }
+
 
         // Get all pegawai data with pagination, search and ordering
         public function getAllPegawai($start = 0, $length = 10, $search = '', $order = []) {
