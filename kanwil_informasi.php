@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once __DIR__ . '/components/header_datin.php';
 require_once __DIR__ . '/components/ui/accordion.php';
 ?>
@@ -80,208 +80,215 @@ require_once __DIR__ . '/components/ui/accordion.php';
 <!-- ApexCharts -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
-    function simplifyLabel(label) {
-        if (label.includes("Kabupaten")) {
-            return label.replace("Kantor Kementerian Agama Kabupaten ", "Kab. ");
-        }
-        if (label.includes("Kota")) {
-            return label.replace("Kantor Kementerian Agama Kota ", "Kota ");
-        }
-        if (label.includes("Kanwil")) {
-            return "Kanwil";
-        }
-        return label;
-    }
-
-    const jabatanRes = await fetch('/api/get_distribusi_jabatan.php');
-    const jabatanData = await jabatanRes.json();
-
-    const golonganRes = await fetch('/api/get_distribusi_golongan.php');
-    const golonganData = await golonganRes.json();
-
-    const unitKerjaRes = await fetch('/api/get_unit_kerja_terbanyak.php');
-    const unitKerjaData = await unitKerjaRes.json();
-
-    const pensiunRes = await fetch('/api/get_pensiun_per_tahun.php');
-    const pensiunData = await pensiunRes.json();
-
-    const usiaRes = await fetch('/api/get_distribusi_usia.php');
-    const usiaData = await usiaRes.json();
-
-
-
-    const filterJabatan = document.getElementById('filterJabatan');
-    const filterGolongan = document.getElementById('filterGolongan');
-
-    const allUnits = new Set([
-        ...jabatanData.map(d => d.induk_unit),
-        ...golonganData.map(d => d.induk_unit)
-    ]);
-    Array.from(allUnits).sort().forEach(unit => {
-        const label = simplifyLabel(unit);
-        const opt1 = new Option(label, unit);
-        const opt2 = new Option(label, unit);
-        filterJabatan.appendChild(opt1);
-        filterGolongan.appendChild(opt2);
-    });
-
-    let jabatanChart, golonganChart, statusChart, unitKerjaChart, pensiunTrendChart, usiaChart;
-
-    function renderJabatanChart(selectedUnit = '') {
-        if (jabatanChart) jabatanChart.destroy();
-        const filtered = jabatanData
-            .filter(d => !selectedUnit || d.induk_unit === selectedUnit)
-            .sort((a, b) => b.jumlah - a.jumlah)
-            .slice(0, 5);
-        jabatanChart = new ApexCharts(document.querySelector("#jabatanChart"), {
-            chart: {
-                type: 'bar',
-                height: 400
-            },
-            series: [{
-                name: 'Jumlah Ragam Jabatan',
-                data: filtered.map(d => d.jumlah)
-            }],
-            xaxis: {
-                categories: filtered.map(d => simplifyLabel(d.induk_unit))
-            },
-            colors: ['#5C80BC']
-        });
-        jabatanChart.render();
-    }
-
-    function renderGolonganChart(selectedUnit = '') {
-        if (golonganChart) golonganChart.destroy();
-        const filtered = golonganData
-            .filter(d => !selectedUnit || d.induk_unit === selectedUnit)
-            .sort((a, b) => b.jumlah - a.jumlah)
-            .slice(0, 5);
-        golonganChart = new ApexCharts(document.querySelector("#golonganChart"), {
-            chart: {
-                type: 'bar',
-                height: 400
-            },
-            series: [{
-                name: 'Jumlah Ragam Golongan',
-                data: filtered.map(d => d.jumlah)
-            }],
-            xaxis: {
-                categories: filtered.map(d => simplifyLabel(d.induk_unit))
-            },
-            colors: ['#6DA39D']
-        });
-        golonganChart.render();
-    }
-
-    function renderStatusChart() {
-        if (statusChart) statusChart.destroy();
-        const counts = {
-            PNS: 0,
-            PPPK: 0
-        };
-        golonganData.forEach(d => {
-            if (/^[IV]+/.test(d.golongan)) {
-                counts.PNS += d.jumlah;
-            } else {
-                counts.PPPK += d.jumlah;
+    document.addEventListener('DOMContentLoaded', async () => {
+        function simplifyLabel(label) {
+            if (label.includes("Kabupaten")) {
+                return label.replace("Kantor Kementerian Agama Kabupaten ", "Kab. ");
             }
-        });
-        statusChart = new ApexCharts(document.querySelector("#statusChart"), {
-            chart: {
-                type: 'donut',
-                height: 400
-            },
-            labels: ['PNS', 'PPPK'],
-            series: [counts.PNS, counts.PPPK],
-            colors: ['#457B9D', '#E76F51']
-        });
-        statusChart.render();
-    }
+            if (label.includes("Kota")) {
+                return label.replace("Kantor Kementerian Agama Kota ", "Kota ");
+            }
+            if (label.includes("Kanwil")) {
+                return "Kanwil";
+            }
+            return label;
+        }
 
-    function renderUnitKerjaChart() {
-        if (unitKerjaChart) unitKerjaChart.destroy();
-        const sorted = unitKerjaData.sort((a, b) => b.jumlah - a.jumlah).slice(0, 10);
-        unitKerjaChart = new ApexCharts(document.querySelector("#unitKerjaChart"), {
-            chart: {
-                type: 'bar',
-                height: 400
-            },
-            series: [{
-                name: 'Jumlah Pegawai',
-                data: sorted.map(d => d.jumlah)
-            }],
-            xaxis: {
-                categories: sorted.map(d => d.unit_kerja.length > 40 ? d.unit_kerja.slice(0, 40) + '…' : d.unit_kerja),
-                labels: {
-                    style: {
-                        fontSize: '12px'
+        const jabatanRes = await fetch('/api/get_distribusi_jabatan.php');
+        const jabatanData = await jabatanRes.json();
+
+        const golonganRes = await fetch('/api/get_distribusi_golongan.php');
+        const golonganData = await golonganRes.json();
+
+        const unitKerjaRes = await fetch('/api/get_unit_kerja_terbanyak.php');
+        const unitKerjaData = await unitKerjaRes.json();
+
+        const pensiunRes = await fetch('/api/get_pensiun_per_tahun.php');
+        const pensiunData = await pensiunRes.json();
+
+        const usiaRes = await fetch('/api/get_distribusi_usia.php');
+        const usiaData = await usiaRes.json();
+
+
+
+        const filterJabatan = document.getElementById('filterJabatan');
+        const filterGolongan = document.getElementById('filterGolongan');
+
+        const allUnits = new Set([
+            ...jabatanData.map(d => d.induk_unit),
+            ...golonganData.map(d => d.induk_unit)
+        ]);
+        Array.from(allUnits).sort().forEach(unit => {
+            const label = simplifyLabel(unit);
+            const opt1 = new Option(label, unit);
+            const opt2 = new Option(label, unit);
+            filterJabatan.appendChild(opt1);
+            filterGolongan.appendChild(opt2);
+        });
+
+        let jabatanChart, golonganChart, statusChart, unitKerjaChart, pensiunTrendChart, usiaChart;
+
+        function renderJabatanChart(selectedUnit = '') {
+            if (jabatanChart) jabatanChart.destroy();
+            const filtered = jabatanData
+                .filter(d => !selectedUnit || d.induk_unit === selectedUnit)
+                .sort((a, b) => b.jumlah - a.jumlah)
+                .slice(0, 5);
+            jabatanChart = new ApexCharts(document.querySelector("#jabatanChart"), {
+                chart: {
+                    type: 'bar',
+                    height: 400
+                },
+                series: [{
+                    name: 'Jumlah Ragam Jabatan',
+                    data: filtered.map(d => d.jumlah)
+                }],
+                xaxis: {
+                    categories: filtered.map(d => simplifyLabel(d.induk_unit))
+                },
+                colors: ['#5C80BC']
+            });
+            jabatanChart.render();
+        }
+
+        function renderGolonganChart(selectedUnit = '') {
+            if (golonganChart) golonganChart.destroy();
+            const filtered = golonganData
+                .filter(d => !selectedUnit || d.induk_unit === selectedUnit)
+                .sort((a, b) => b.jumlah - a.jumlah)
+                .slice(0, 5);
+            golonganChart = new ApexCharts(document.querySelector("#golonganChart"), {
+                chart: {
+                    type: 'bar',
+                    height: 400
+                },
+                series: [{
+                    name: 'Jumlah Ragam Golongan',
+                    data: filtered.map(d => d.jumlah)
+                }],
+                xaxis: {
+                    categories: filtered.map(d => simplifyLabel(d.induk_unit))
+                },
+                colors: ['#6DA39D']
+            });
+            golonganChart.render();
+        }
+
+        function renderStatusChart() {
+            if (statusChart) statusChart.destroy();
+            const counts = {
+                PNS: 0,
+                PPPK: 0
+            };
+            golonganData.forEach(d => {
+                // Mengecek apakah golongan berada dalam rentang I/a hingga IV/e
+                if (/^I\/[a-e]$|^II\/[a-e]$|^III\/[a-e]$|^IV\/[a-e]$/.test(d.golongan)) {
+                    counts.PNS += d.jumlah;
+                } else {
+                    counts.PPPK += d.jumlah;
+                }
+            });
+
+            statusChart = new ApexCharts(document.querySelector("#statusChart"), {
+                chart: {
+                    type: 'donut',
+                    height: 400
+                },
+                labels: ['PNS', 'PPPK'],
+                series: [counts.PNS, counts.PPPK],
+                colors: ['#457B9D', '#E76F51']
+            });
+            statusChart.render();
+        }
+
+        function renderUnitKerjaChart() {
+            if (unitKerjaChart) unitKerjaChart.destroy();
+            const sorted = unitKerjaData.sort((a, b) => b.jumlah - a.jumlah).slice(0, 10);
+            unitKerjaChart = new ApexCharts(document.querySelector("#unitKerjaChart"), {
+                chart: {
+                    type: 'bar',
+                    height: 400
+                },
+                series: [{
+                    name: 'Jumlah Pegawai',
+                    data: sorted.map(d => d.jumlah)
+                }],
+                xaxis: {
+                    categories: sorted.map(d => d.unit_kerja.length > 40 ? d.unit_kerja.slice(0, 40) + '…' : d.unit_kerja),
+                    labels: {
+                        style: {
+                            fontSize: '12px'
+                        }
                     }
-                }
-            },
-            tooltip: {
-                custom: function({series, seriesIndex, dataPointIndex, w}) {
-                    const item = unitKerjaData[dataPointIndex];
-                    return '<div class="px-2 py-1 text-sm">' +
-                        '<strong>' + item.unit_kerja + '</strong><br>' +
-                        '<span class="text-gray-600">' + item.induk_unit + '</span><br>' +
-                        'Jumlah: <strong>' + item.jumlah + '</strong>' +
-                        '</div>';
-                }
-            },
-            colors: ['#A67DB8']
+                },
+                tooltip: {
+                    custom: function({
+                        series,
+                        seriesIndex,
+                        dataPointIndex,
+                        w
+                    }) {
+                        const item = unitKerjaData[dataPointIndex];
+                        return '<div class="px-2 py-1 text-sm">' +
+                            '<strong>' + item.unit_kerja + '</strong><br>' +
+                            '<span class="text-gray-600">' + item.induk_unit + '</span><br>' +
+                            'Jumlah: <strong>' + item.jumlah + '</strong>' +
+                            '</div>';
+                    }
+                },
+                colors: ['#A67DB8']
+            });
+            unitKerjaChart.render();
+        }
+
+        function renderUsiaChart() {
+            if (usiaChart) usiaChart.destroy();
+            usiaChart = new ApexCharts(document.querySelector("#usiaChart"), {
+                chart: {
+                    type: 'pie',
+                    height: 400
+                },
+                labels: usiaData.map(d => d.rentang_usia),
+                series: usiaData.map(d => d.jumlah),
+                colors: ['#4CAF50', '#2196F3', '#FFC107', '#F44336']
+            });
+            usiaChart.render();
+        }
+
+
+
+        function renderPensiunTrendChart() {
+            if (pensiunTrendChart) pensiunTrendChart.destroy();
+            pensiunTrendChart = new ApexCharts(document.querySelector("#pensiunTrendChart"), {
+                chart: {
+                    type: 'line',
+                    height: 400
+                },
+                series: [{
+                    name: 'Jumlah Pensiun',
+                    data: pensiunData.map(d => d.jumlah)
+                }],
+                xaxis: {
+                    categories: pensiunData.map(d => d.tahun)
+                },
+                colors: ['#E63946']
+            });
+            pensiunTrendChart.render();
+        }
+
+        renderJabatanChart();
+        renderGolonganChart();
+        renderStatusChart();
+        renderUnitKerjaChart();
+        renderUsiaChart();
+
+        renderPensiunTrendChart();
+
+        filterJabatan.addEventListener('change', () => {
+            renderJabatanChart(filterJabatan.value);
         });
-        unitKerjaChart.render();
-    }
-
-    function renderUsiaChart() {
-        if (usiaChart) usiaChart.destroy();
-        usiaChart = new ApexCharts(document.querySelector("#usiaChart"), {
-            chart: {
-                type: 'pie',
-                height: 400
-            },
-            labels: usiaData.map(d => d.rentang_usia),
-            series: usiaData.map(d => d.jumlah),
-            colors: ['#4CAF50', '#2196F3', '#FFC107', '#F44336']
+        filterGolongan.addEventListener('change', () => {
+            renderGolonganChart(filterGolongan.value);
         });
-        usiaChart.render();
-    }
-
-
-
-    function renderPensiunTrendChart() {
-        if (pensiunTrendChart) pensiunTrendChart.destroy();
-        pensiunTrendChart = new ApexCharts(document.querySelector("#pensiunTrendChart"), {
-            chart: {
-                type: 'line',
-                height: 400
-            },
-            series: [{
-                name: 'Jumlah Pensiun',
-                data: pensiunData.map(d => d.jumlah)
-            }],
-            xaxis: {
-                categories: pensiunData.map(d => d.tahun)
-            },
-            colors: ['#E63946']
-        });
-        pensiunTrendChart.render();
-    }
-
-    renderJabatanChart();
-    renderGolonganChart();
-    renderStatusChart();
-    renderUnitKerjaChart();
-    renderUsiaChart();
-
-    renderPensiunTrendChart();
-
-    filterJabatan.addEventListener('change', () => {
-        renderJabatanChart(filterJabatan.value);
     });
-    filterGolongan.addEventListener('change', () => {
-        renderGolonganChart(filterGolongan.value);
-    });
-});
 </script>
