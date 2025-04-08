@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once __DIR__ . '/../components/header_datin.php';
 require_once __DIR__ . '/../components/ui/card.php';
 ?>
@@ -6,12 +6,12 @@ require_once __DIR__ . '/../components/ui/card.php';
     <?php
     echo Card([
         'className' => 'w-full',
-        'children' => 
-            CardHeader([
-                'children' => 
-                    CardTitle(['children' => 'Peta Interaktif Pegawai']) . 
-                    CardDescription(['children' => 'Visualisasi sebaran pegawai per Kabupaten/Kota di NTB'])
-            ]) .
+        'children' =>
+        CardHeader([
+            'children' =>
+            CardTitle(['children' => 'Peta Interaktif Pegawai']) .
+                CardDescription(['children' => 'Visualisasi sebaran pegawai per Kabupaten/Kota di NTB'])
+        ]) .
             CardContent([
                 'className' => 'relative pt-4',
                 'children' => '
@@ -113,14 +113,14 @@ require_once __DIR__ . '/../components/ui/card.php';
             "Kanwil Kementerian Agama NTB": [-8.578233, 116.102478],
             "Kota Mataram": [-8.586579, 116.117589],
             "Kabupaten Lombok Barat": [-8.683423, 116.138591],
-            "Kabupaten Bima": [-8.4576, 118.7287],
-            "Kabupaten Dompu": [-8.5315, 118.4620],
-            "Kabupaten Lombok Tengah": [-8.6926, 116.2770],
+            "Kabupaten Bima": [-8.462116, 118.746157],
+            "Kabupaten Dompu": [-8.534303, 118.463704],
+            "Kabupaten Lombok Tengah": [-8.704444, 116.271095],
             "Kabupaten Lombok Timur": [-8.6500, 116.5280],
-            "Kabupaten Lombok Utara": [-8.3702, 116.2770],
-            "Kabupaten Sumbawa": [-8.7707, 117.4074],
-            "Kabupaten Sumbawa Barat": [-8.7869, 116.9865],
-            "Kota Bima": [-8.4438, 118.7346]
+            "Kabupaten Lombok Utara": [-8.352634, 116.180871],
+            "Kabupaten Sumbawa": [-8.48820, 117.42370],
+            "Kabupaten Sumbawa Barat": [-8.77324, 116.82535],
+            "Kota Bima": [-8.462529, 118.746835]
         };
 
         try {
@@ -144,7 +144,7 @@ require_once __DIR__ . '/../components/ui/card.php';
                     riseOnHover: true,
                     riseOffset: 250
                 }).addTo(map);
-                
+
                 const popupContent = `
                     <div class="p-2">
                         <h3 class="font-semibold text-primary mb-2">${nama}</h3>
@@ -156,7 +156,7 @@ require_once __DIR__ . '/../components/ui/card.php';
                         </div>
                     </div>
                 `;
-                
+
                 marker.bindPopup(popupContent, {
                     className: 'custom-popup',
                     maxWidth: 300,
