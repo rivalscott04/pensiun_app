@@ -130,7 +130,7 @@ require_once __DIR__ . '/../components/ui/card.php';
             if (localStorage.getItem('pegawaiData')) {
                 pegawaiData = JSON.parse(localStorage.getItem('pegawaiData'));
             } else {
-                const res = await fetch(BASE_URL + 'api/get_pegawai_kabupaten.php');
+                const res = await fetch(BASE_URL + '/api/get_pegawai_kabupaten.php');
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
