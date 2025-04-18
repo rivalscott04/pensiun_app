@@ -116,17 +116,17 @@ require_once __DIR__ . '/../components/ui/card.php';
         }).addTo(map);
 
         const kantorLocations = {
-            "Kanwil Kementerian Agama NTB": [-8.578233, 116.102478],
-            "Kota Mataram": [-8.586579, 116.117589],
-            "Kabupaten Lombok Barat": [-8.683423, 116.138591],
-            "Kabupaten Bima": [-8.462116, 118.746157],
-            "Kabupaten Dompu": [-8.534303, 118.463704],
-            "Kabupaten Lombok Tengah": [-8.704444, 116.271095],
-            "Kabupaten Lombok Timur": [-8.6500, 116.5280],
-            "Kabupaten Lombok Utara": [-8.352634, 116.180871],
-            "Kabupaten Sumbawa": [-8.48820, 117.42370],
-            "Kabupaten Sumbawa Barat": [-8.77324, 116.82535],
-            "Kota Bima": [-8.462529, 118.746835]
+            "Kanwil Kementerian Agama Provinsi Nusa Tenggara Barat": [-8.578233, 116.102478],
+            "Kantor Kementerian Agama Kota Mataram": [-8.586579, 116.117589],
+            "Kantor Kementerian Agama Kabupaten Lombok Barat": [-8.683423, 116.138591],
+            "Kantor Kementerian Agama Kabupaten Bima": [-8.462116, 118.746157],
+            "Kantor Kementerian Agama Kabupaten Dompu": [-8.534303, 118.463704],
+            "Kantor Kementerian Agama Kabupaten Lombok Tengah": [-8.704444, 116.271095],
+            "Kantor Kementerian Agama Kabupaten Lombok Timur": [-8.6500, 116.5280],
+            "Kantor Kementerian Agama Kabupaten Lombok Utara": [-8.352634, 116.180871],
+            "Kantor Kementerian Agama Kabupaten Sumbawa": [-8.48820, 117.42370],
+            "Kantor Kementerian Agama Kabupaten Sumbawa Barat": [-8.77324, 116.82535],
+            "Kantor Kementerian Agama Kota Bima": [-8.462529, 118.746835]
         };
 
         try {
