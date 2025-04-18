@@ -38,6 +38,9 @@ require_once __DIR__ . '/../components/ui/card.php';
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
 
+<!-- Toast JS -->
+<script src="/assets/js/toast.js"></script>
+
 <style>
     /* Custom Popup Styling */
     .custom-popup .leaflet-popup-content-wrapper {
