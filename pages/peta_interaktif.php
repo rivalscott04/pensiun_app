@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/configdatin.php';
 require_once __DIR__ . '/../components/header_datin.php';
 require_once __DIR__ . '/../components/ui/card.php';
 ?>
@@ -96,6 +97,8 @@ require_once __DIR__ . '/../components/ui/card.php';
 </script>
 
 <script>
+    const BASE_URL = "<?php echo BASE_URL; ?>";
+    
     document.addEventListener('DOMContentLoaded', async () => {
         if (typeof L === 'undefined') {
             showToast('Gagal memuat peta. Silakan muat ulang halaman.', 'error');
