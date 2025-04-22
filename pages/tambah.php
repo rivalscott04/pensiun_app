@@ -163,13 +163,6 @@ function savePensiun(event) {
     
     // Show confirmation dialog
     showConfirm('Konfirmasi', 'Apakah anda yakin ingin menyimpan data ini?', function() {
-        // Log the form data for debugging
-        console.log('Form data:', {
-            nip: $('#nip').val(),
-            jenis_pensiun: $('#jenis_pensiun').val(),
-            status: $('#status').val()
-        });
-        
         $.ajax({
             url: '<?= BASE_URL ?>/api/pensiun-save.php',
             type: 'POST',
@@ -179,9 +172,10 @@ function savePensiun(event) {
             success: function(response) {
                 if (response.status) {
                     showToast('success', response.message);
+                    // Tambahkan delay sebelum redirect
                     setTimeout(function() {
                         window.location.href = '<?= BASE_URL ?>';
-                    }, 1500);
+                    }, 2000); // Delay 2 detik untuk memastikan toast muncul
                 } else {
                     showToast('error', response.message);
                 }
@@ -192,7 +186,6 @@ function savePensiun(event) {
             }
         });
     });
-
 }
 
 function handleFileSelect(input) {

@@ -325,7 +325,7 @@ include __DIR__ . '/../components/header.php';
             columns: [{
                     data: 'nip',
                     render: function(data) {
-                        return '***' + data.substring(10);
+                        return data;
                     }
                 },
                 {
